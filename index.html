@@ -302,7 +302,7 @@
     <div class="wrap solution-inner">
 
       <div class="exploded-media">
-        <video autoplay muted loop playsinline disablepictureinpicture
+        <video id="explodedVideo" muted loop playsinline disablepictureinpicture
                controlslist="nodownload noplaybackrate nofullscreen"
                tabindex="-1" poster="exploded-view-poster.jpg">
           <source src="exploded-view.mp4" type="video/mp4" />
@@ -378,6 +378,24 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    (function () {
+      var video = document.getElementById("explodedVideo");
+      if (!video) return;
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              video.play().catch(function () {});
+              observer.unobserve(video);
+            }
+          });
+        }, { threshold: 0.35 });
+        observer.observe(video);
+      } else {
+        video.play().catch(function () {});
+      }
+    })();
   </script>
 </body>
 </html>
