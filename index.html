@@ -103,6 +103,42 @@
       color: var(--muted);
     }
 
+    /* ---------- White "Solution" band: media left, caption right ---------- */
+    .solution {
+      background: #ffffff;
+      color: #17233f;
+      margin-top: 70px;
+    }
+    .solution-inner {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 56px;
+      align-items: center;
+      padding: 84px 0 84px 40px;
+      border-left: 1px solid #d7d7d7;   /* thin vertical rule on the left */
+    }
+    .exploded-media { width: 100%; }
+    .exploded-media video,
+    .exploded-media img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+    .exploded-caption {
+      font-weight: 500;
+      line-height: 1.25;
+      font-size: clamp(1.5rem, 2.7vw, 2.4rem);
+      color: #17233f;
+    }
+    @media (max-width: 800px) {
+      .solution-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 40px 0 40px 20px;
+      }
+    }
+
     /* ---------- Responsive: stack on phones ---------- */
     @media (max-width: 800px) {
       .wrap { padding: 0 24px; }
@@ -159,5 +195,28 @@
     </section>
 
   </div>
+
+  <!-- ============ WHITE SOLUTION SECTION (video left, caption right) ============ -->
+  <section class="solution">
+    <div class="wrap solution-inner">
+
+      <!-- LEFT: exploded-view video.
+           EDIT ME: add your video file to the repo named exploded-view.mp4.
+           Until it's there, the placeholder image below shows instead. -->
+      <div class="exploded-media">
+        <video autoplay muted loop playsinline controls poster="exploded-view-poster.jpg">
+          <source src="exploded-view.mp4" type="video/mp4" />
+          <!-- If the browser can't play the video, it shows this image: -->
+          <img src="exploded-view-poster.jpg" alt="Exploded view of drone arms and tracks" />
+        </video>
+      </div>
+
+      <!-- RIGHT: caption. EDIT ME. -->
+      <p class="exploded-caption">
+        Exploded view of drone arms and tracks with folding demonstration
+      </p>
+
+    </div>
+  </section>
 </body>
 </html>
