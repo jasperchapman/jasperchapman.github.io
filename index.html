@@ -5,16 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jasper Chapman</title>
 
-  <!-- Font that matches the heavy grotesque look of your Squarespace site -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --navy: #0d1116;      /* near-black background */
-      --cream: #f4efe5;     /* off-white text */
-      --muted: #d8d3c8;     /* softer off-white for body text */
+      --navy: #0d1116;
+      --cream: #f4efe5;
+      --muted: #d8d3c8;
       --line: rgba(244, 239, 229, 0.25);
     }
     * { box-sizing: border-box; }
@@ -27,11 +26,9 @@
     }
     a { color: inherit; text-decoration: none; }
 
-    /* Side margins are a fixed 3.8% of the window at ALL sizes and zoom levels. */
     .wrap { width: 100%; margin: 0; padding: 0 3.8%; }
 
-    /* ---------- Top navigation ---------- */
-    .topbar { border-bottom: 1px solid var(--line); }  /* full-width divider */
+    .topbar { border-bottom: 1px solid var(--line); }
     nav {
       display: flex;
       align-items: center;
@@ -51,7 +48,6 @@
     }
     nav .menu a.active { text-decoration: underline; text-underline-offset: 6px; }
 
-    /* ---------- Hero: headline + description ---------- */
     .hero {
       display: grid;
       grid-template-columns: 1.6fr 1fr;
@@ -63,7 +59,7 @@
       margin: 0;
       font-weight: 900;
       text-transform: uppercase;
-      font-size: max(1.6rem, 3.6vw);   /* scales with the window so proportions stay fixed */
+      font-size: max(1.6rem, 3.6vw);
       line-height: 1.0;
       letter-spacing: -0.01em;
     }
@@ -75,16 +71,14 @@
       max-width: 42ch;
     }
 
-    /* ---------- Hero image ---------- */
     .hero-image {
       width: 100%;
       display: block;
-      border-radius: 24px;   /* rounded corners like your Squarespace page */
+      border-radius: 24px;
       aspect-ratio: 2768 / 1068;
       object-fit: cover;
     }
 
-    /* ---------- Centered content blocks (Problem, etc.) ---------- */
     .block {
       text-align: center;
       padding: 90px 0 20px;
@@ -104,7 +98,6 @@
       color: var(--muted);
     }
 
-    /* ---------- White "Solution" band: media left, caption right ---------- */
     .solution {
       background: #ffffff;
       color: #17233f;
@@ -115,16 +108,18 @@
       grid-template-columns: 1.55fr 1fr;
       gap: 56px;
       align-items: center;
-      padding: 84px 0;
+      padding: 48px 0;
     }
-    .exploded-media { width: 100%; }
+    .exploded-media { width: 100%; text-align: center; }
     .exploded-media video,
     .exploded-media img {
-      width: 100%;
+      max-width: 100%;
+      max-height: 420px;
+      width: auto;
       height: auto;
-      display: block;
+      display: inline-block;
       border-radius: 8px;
-      pointer-events: none;   /* ignore the mouse so no player controls appear on hover */
+      pointer-events: none;
     }
     .exploded-caption {
       font-weight: 500;
@@ -136,12 +131,8 @@
       .solution-inner {
         grid-template-columns: 1fr;
         gap: 24px;
-        padding: 40px 0 40px 20px;
+        padding: 36px 0;
       }
-    }
-
-    /* ---------- Responsive: stack on phones ---------- */
-    @media (max-width: 800px) {
       .hero { grid-template-columns: 1fr; gap: 20px; padding: 28px 0; }
       nav .menu a { margin-left: 22px; }
       nav .brand { font-size: 1.1rem; }
@@ -150,7 +141,6 @@
 </head>
 <body>
 
-  <!-- ============ NAV BAR (full-width divider underneath) ============ -->
   <header class="topbar">
     <div class="wrap">
       <nav>
@@ -165,8 +155,6 @@
 
   <div class="wrap">
 
-    <!-- ============ HERO TEXT ============ -->
-    <!-- EDIT ME: change the headline and the description below -->
     <section class="hero">
       <h1>Passively Morphing Aerial-Ground Robot</h1>
       <p class="lede">
@@ -175,14 +163,9 @@
       </p>
     </section>
 
-    <!-- ============ HERO IMAGE ============ -->
-    <!-- EDIT ME: this points to the image file named morphable-drone.jpg.
-         Upload that image into your repo alongside this file. -->
     <img class="hero-image" src="morphable-drone.jpg"
          alt="Morphable aerial-ground robot on pavement" />
 
-    <!-- ============ PROBLEM SECTION ============ -->
-    <!-- EDIT ME: change the heading and paragraph text -->
     <section class="block">
       <h2 class="block-title">Problem</h2>
       <p class="block-body">
@@ -196,24 +179,18 @@
 
   </div>
 
-  <!-- ============ WHITE SOLUTION SECTION (video left, caption right) ============ -->
   <section class="solution">
     <div class="wrap solution-inner">
 
-      <!-- LEFT: exploded-view video.
-           EDIT ME: add your video file to the repo named exploded-view.mp4.
-           Until it's there, the placeholder image below shows instead. -->
       <div class="exploded-media">
         <video autoplay muted loop playsinline disablepictureinpicture
                controlslist="nodownload noplaybackrate nofullscreen"
                tabindex="-1" poster="exploded-view-poster.jpg">
           <source src="exploded-view.mp4" type="video/mp4" />
-          <!-- If the browser can't play the video, it shows this image: -->
           <img src="exploded-view-poster.jpg" alt="Exploded view of drone arms and tracks" />
         </video>
       </div>
 
-      <!-- RIGHT: caption. EDIT ME. -->
       <p class="exploded-caption">
         Exploded view of drone arms and tracks with folding demonstration
       </p>
