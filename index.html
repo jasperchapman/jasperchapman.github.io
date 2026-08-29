@@ -97,6 +97,14 @@
       line-height: 1.6;
       color: var(--muted);
     }
+    .solution-photo {
+      display: block;
+      margin: 48px auto 0;
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+      border-radius: 16px;
+    }
 
     .solution {
       background: #ffffff;
@@ -137,6 +145,53 @@
       .hero { grid-template-columns: 1fr; gap: 20px; padding: 28px 0; }
       nav .menu a { margin-left: 22px; }
       nav .brand { font-size: 1.1rem; }
+      .footer-top { flex-direction: column; align-items: flex-start; gap: 22px; }
+    }
+
+    footer { margin-top: 90px; border-top: 1px solid var(--line); }
+    .footer-inner { padding: 44px 3.8% 40px; }
+    .footer-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-weight: 600;
+      font-size: 1.25rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .footer-brand span {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--muted);
+      max-width: 34ch;
+    }
+    .footer-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 1rem;
+      color: var(--muted);
+      transition: color 0.15s ease;
+    }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-bottom {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--muted);
     }
   </style>
 </head>
@@ -208,7 +263,35 @@
         belt, so the robot switches between flying and driving using only its own
         thrust, with no extra motor to add weight or fail.
       </p>
+      <img class="solution-photo" src="solution-robot.jpg"
+           alt="Front view of the morphing aerial-ground robot" />
     </section>
   </div>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          Jasper Chapman
+          <span>Building robots and the software that drives them, at Carnegie Mellon University.</span>
+        </div>
+        <nav class="footer-links">
+          <a href="index.html">Projects</a>
+          <a href="#about">About</a>
+          <a href="mailto:jmchapma@andrew.cmu.edu">Email</a>
+          <a href="https://github.com/jasperchapman" target="_blank" rel="noopener">GitHub</a>
+          <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="year"></span> Jasper Chapman. All rights reserved.</span>
+        <span>Designed &amp; built by Jasper Chapman.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
