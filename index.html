@@ -115,8 +115,7 @@
       grid-template-columns: 1.55fr 1fr;
       gap: 56px;
       align-items: center;
-      padding: 84px 0 84px 40px;
-      border-left: 1px solid #d7d7d7;   /* thin vertical rule on the left */
+      padding: 84px 0;
     }
     .exploded-media { width: 100%; }
     .exploded-media video,
@@ -125,6 +124,7 @@
       height: auto;
       display: block;
       border-radius: 8px;
+      pointer-events: none;   /* ignore the mouse so no player controls appear on hover */
     }
     .exploded-caption {
       font-weight: 500;
@@ -204,7 +204,9 @@
            EDIT ME: add your video file to the repo named exploded-view.mp4.
            Until it's there, the placeholder image below shows instead. -->
       <div class="exploded-media">
-        <video autoplay muted loop playsinline controls poster="exploded-view-poster.jpg">
+        <video autoplay muted loop playsinline disablepictureinpicture
+               controlslist="nodownload noplaybackrate nofullscreen"
+               tabindex="-1" poster="exploded-view-poster.jpg">
           <source src="exploded-view.mp4" type="video/mp4" />
           <!-- If the browser can't play the video, it shows this image: -->
           <img src="exploded-view-poster.jpg" alt="Exploded view of drone arms and tracks" />
