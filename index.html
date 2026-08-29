@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jasper Chapman</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f7f9;
+      --text: #1a1a1a;
+      --muted: #5a6472;
+      --accent: #2f6fed;
+      --border: #e4e7eb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1115;
+        --surface: #171a21;
+        --text: #f2f3f5;
+        --muted: #9aa4b2;
+        --accent: #6ea0ff;
+        --border: #262b33;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+    header {
+      padding: 96px 0 56px;
+    }
+    header h1 {
+      font-size: clamp(2.2rem, 6vw, 3.4rem);
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+    }
+    header p.tagline {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin: 0 0 24px;
+      max-width: 60ch;
+    }
+    .links a {
+      display: inline-block;
+      margin-right: 18px;
+      font-weight: 500;
+    }
+
+    section {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+    section h2 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin: 0 0 20px;
+    }
+
+    .project {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 16px;
+    }
+    .project h3 { margin: 0 0 6px; font-size: 1.1rem; }
+    .project p { margin: 0; color: var(--muted); }
+
+    footer {
+      padding: 48px 0 72px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <h1>Jasper Chapman</h1>
+      <p class="tagline">
+        <!-- EDIT ME: one line about who you are, e.g. "Computer science student at Carnegie Mellon, interested in ___." -->
+        Student at Carnegie Mellon University. Building things on the web.
+      </p>
+      <div class="links">
+        <!-- EDIT ME: update or remove these links -->
+        <a href="mailto:jmchapma@andrew.cmu.edu">Email</a>
+        <a href="https://github.com/jasperchapman" target="_blank" rel="noopener">GitHub</a>
+        <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>About</h2>
+      <p>
+        <!-- EDIT ME: a short paragraph about yourself, your interests, and what you're working on. -->
+        Write a few sentences here about who you are, what you study or work on,
+        and what you're excited about. This is the first thing visitors read, so
+        keep it warm and specific.
+      </p>
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+
+      <div class="project">
+        <h3>Project one</h3>
+        <p>A one-line description of what it is and what you did. Link it if it's online.</p>
+      </div>
+
+      <div class="project">
+        <h3>Project two</h3>
+        <p>Another project, class assignment, or thing you built.</p>
+      </div>
+
+      <div class="project">
+        <h3>Project three</h3>
+        <p>Swap these out for your real work as you go.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>
+        The best way to reach me is by
+        <a href="mailto:jmchapma@andrew.cmu.edu">email</a>.
+      </p>
+    </section>
+
+    <footer>
+      &copy; <span id="year"></span> Jasper Chapman &middot; Built with GitHub Pages
+    </footer>
+
+  </div>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
