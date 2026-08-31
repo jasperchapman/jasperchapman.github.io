@@ -201,6 +201,12 @@
       .sol-fig { justify-self: center; margin: 0 auto 36px; }
       .sol-fig img { max-width: 520px; }
     }
+    /* Phones: zoom the hero into its center with a taller crop, and let the video fill */
+    @media (max-width: 640px) {
+      .hero-image { aspect-ratio: 4 / 3; object-position: center; }
+      .exploded-media video,
+      .exploded-media img { width: 100%; height: auto; max-height: 62vh; }
+    }
     .paper { text-align: center; padding: 96px 0 40px; }
     .paper h2 {
       margin: 0 0 16px;
@@ -255,7 +261,7 @@
         <a href="index.html" class="brand">Jasper Chapman</a>
         <div class="menu">
           <a href="index.html" class="active">Projects</a>
-          <a href="#about">About</a>
+          <a href="index.html#about">About</a>
         </div>
       </nav>
     </div>
@@ -284,11 +290,10 @@
   <section class="solution">
     <div class="wrap solution-inner">
       <div class="exploded-media">
-        <video id="explodedVideo" muted loop playsinline disablepictureinpicture
-               controlslist="nodownload noplaybackrate nofullscreen"
-               tabindex="-1" poster="exploded-view-poster.jpg">
+        <video id="explodedVideo" autoplay muted loop playsinline preload="auto"
+               disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"
+               tabindex="-1">
           <source src="exploded-view.mp4" type="video/mp4" />
-          <img src="exploded-view-poster.jpg" alt="Exploded view of drone arms and tracks" />
         </video>
       </div>
       <p class="exploded-caption">
@@ -355,18 +360,16 @@
     (function () {
       var video = document.getElementById("explodedVideo");
       if (!video) return;
+      var tryPlay = function () { video.play().catch(function () {}); };
       if ("IntersectionObserver" in window) {
         var observer = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              video.play().catch(function () {});
-              observer.unobserve(video);
-            }
+            if (entry.isIntersecting) { tryPlay(); observer.unobserve(video); }
           });
-        }, { threshold: 0.35 });
+        }, { threshold: 0.25 });
         observer.observe(video);
       } else {
-        video.play().catch(function () {});
+        tryPlay();
       }
     })();
   </script>
