@@ -70,10 +70,12 @@
     }
     .role strong { color: var(--cream); font-weight: 600; }
     .tagline {
-      margin: 12px 0 0;
+      margin: 14px 0 0;
       font-style: italic;
       color: var(--dim);
       font-size: clamp(0.95rem, 1.3vw, 1.08rem);
+      line-height: 1.5;
+      max-width: 58ch;
     }
 
     nav.links {
@@ -133,10 +135,19 @@
       font-size: clamp(1.6rem, 2.6vw, 2.3rem);
     }
 
-    .project-card {
-      display: block;
-      max-width: 680px;
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(16px, 2vw, 26px);
+      max-width: 1000px;
       margin: 0 auto;
+    }
+    @media (max-width: 760px) {
+      .project-grid { grid-template-columns: 1fr; max-width: 560px; }
+    }
+    .project-card {
+      display: flex;
+      flex-direction: column;
       border-radius: 24px;
       overflow: hidden;
       border: 1px solid var(--line-soft);
@@ -151,7 +162,7 @@
     .project-media {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 8;
+      aspect-ratio: 16 / 9;
       overflow: hidden;
       background: #10161d;
     }
@@ -166,13 +177,11 @@
 
     .project-info {
       display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
-      padding: clamp(20px, 2.4vw, 30px) clamp(22px, 2.6vw, 34px) clamp(24px, 2.6vw, 32px);
+      flex-direction: column;
+      flex: 1;
+      padding: clamp(20px, 2.2vw, 28px) clamp(22px, 2.4vw, 30px) clamp(20px, 2.4vw, 26px);
     }
-    .project-text { min-width: 0; max-width: 62ch; }
+    .project-text { min-width: 0; }
     .project-eyebrow {
       font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em;
       color: var(--dim); font-weight: 600; margin: 0 0 10px;
@@ -192,7 +201,9 @@
       line-height: 1.5;
     }
     .project-cta {
-      flex: 0 0 auto;
+      align-self: flex-start;
+      margin-top: auto;
+      padding-top: 18px;
       display: inline-flex; align-items: center; gap: 8px;
       font-weight: 600; font-size: 1rem;
       color: var(--cream);
@@ -255,7 +266,7 @@
             <strong>B.S. Mechanical Engineering</strong> · Additional Major in Robotics<br>
             Carnegie Mellon University · Class of 2029
           </p>
-          <p class="tagline reveal d2">Designing small machines that move across any terrain.</p>
+          <p class="tagline reveal d2">Undergraduate engineer drawn to building things that move &mdash; and things that matter. Lately that&rsquo;s a palm-sized robot that flies and drives on its own, carbon-fiber parts for a Formula SAE car, and a nonprofit that turned 300 koi into classrooms across Sierra Leone.</p>
 
           <div class="socials reveal d3">
             <a href="mailto:jmchapma@andrew.cmu.edu" aria-label="Email">
@@ -283,38 +294,71 @@
         <h2 id="projects-h">Projects</h2>
       </div>
 
-      <!-- Clicking the card / image preview opens the drone project page -->
-      <a class="project-card reveal d2" href="morphing-drone.html">
-        <div class="project-media">
-          <!-- placeholder shown if the real image can't load -->
-          <svg class="ph" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Project preview placeholder">
-            <defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#1b2530"/><stop offset="1" stop-color="#0e131a"/>
-            </linearGradient></defs>
-            <rect width="320" height="160" fill="url(#mg)"/>
-            <g fill="none" stroke="rgba(244,239,229,0.16)" stroke-width="1.6">
-              <circle cx="120" cy="80" r="46"/><circle cx="120" cy="80" r="70"/>
-              <path d="M40 118 Q160 50 300 96"/>
-            </g>
-          </svg>
-          <!-- real image from the repo; if missing, it removes itself and the placeholder shows -->
-          <img src="DronePreview.jpg"
-               alt="Passively morphing aerial-ground robot on pavement"
-               onerror="this.remove()" />
-        </div>
-
-        <div class="project-info">
-          <div class="project-text">
-            <p class="project-eyebrow">Robotics · 2026</p>
-            <h3 class="project-title">Passively Morphing Aerial-Ground Robot</h3>
-            <p class="project-desc">
-              A palm-sized robot that flies over obstacles and rolls through tight
-              spaces, switching between flight and driving using only its own thrust.
-            </p>
+      <div class="project-grid">
+        <!-- Project 1: clicking the card / image opens the drone project page -->
+        <a class="project-card reveal d2" href="morphing-drone.html">
+          <div class="project-media">
+            <svg class="ph" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Project preview placeholder">
+              <defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#1b2530"/><stop offset="1" stop-color="#0e131a"/>
+              </linearGradient></defs>
+              <rect width="320" height="180" fill="url(#mg)"/>
+              <g fill="none" stroke="rgba(244,239,229,0.16)" stroke-width="1.6">
+                <circle cx="120" cy="90" r="46"/><circle cx="120" cy="90" r="70"/>
+                <path d="M40 128 Q160 60 300 106"/>
+              </g>
+            </svg>
+            <img src="DronePreview.jpg"
+                 alt="Passively morphing aerial-ground robot on pavement"
+                 onerror="this.remove()" />
           </div>
-          <span class="project-cta">View project <span class="arrow">&rarr;</span></span>
-        </div>
-      </a>
+          <div class="project-info">
+            <div class="project-text">
+              <p class="project-eyebrow">Robotics · 2026</p>
+              <h3 class="project-title">Passively Morphing Aerial-Ground Robot</h3>
+              <p class="project-desc">
+                A palm-sized robot that flies over obstacles and rolls through tight
+                spaces, switching between flight and driving using only its own thrust.
+              </p>
+            </div>
+            <span class="project-cta">View project <span class="arrow">&rarr;</span></span>
+          </div>
+        </a>
+
+        <!-- Project 2: HRI robot-trust study -->
+        <a class="project-card reveal d3" href="robot-trust.html">
+          <div class="project-media">
+            <svg class="ph" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Project preview placeholder">
+              <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#20222e"/><stop offset="1" stop-color="#101018"/>
+              </linearGradient></defs>
+              <rect width="320" height="180" fill="url(#rg)"/>
+              <g fill="none" stroke="rgba(244,239,229,0.16)" stroke-width="1.6">
+                <path d="M50 130 L110 92 L170 108 L230 60 L285 84"/>
+                <circle cx="50" cy="130" r="5" fill="rgba(244,239,229,0.3)" stroke="none"/>
+                <circle cx="110" cy="92" r="5" fill="rgba(244,239,229,0.3)" stroke="none"/>
+                <circle cx="170" cy="108" r="5" fill="rgba(244,239,229,0.3)" stroke="none"/>
+                <circle cx="230" cy="60" r="5" fill="rgba(244,239,229,0.3)" stroke="none"/>
+                <circle cx="285" cy="84" r="5" fill="rgba(244,239,229,0.3)" stroke="none"/>
+              </g>
+            </svg>
+            <img src="RobotTrustPreview.jpg"
+                 alt="Human-robot trust study with the Misty II robot"
+                 onerror="this.remove()" />
+          </div>
+          <div class="project-info">
+            <div class="project-text">
+              <p class="project-eyebrow">Research · Human-Robot Interaction · 2025</p>
+              <h3 class="project-title">DeMistyfying Robot Trust</h3>
+              <p class="project-desc">
+                A Wizard-of-Oz study with the Misty II robot testing how the severity of a
+                robot&rsquo;s mistakes shapes the trust people place in it.
+              </p>
+            </div>
+            <span class="project-cta">View project <span class="arrow">&rarr;</span></span>
+          </div>
+        </a>
+      </div>
     </section>
   </div>
 
