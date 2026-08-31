@@ -46,7 +46,12 @@
       overflow: hidden;
       box-shadow: 0 20px 46px -24px rgba(0,0,0,0.85);
     }
-    .avatar svg { display: block; width: 100%; height: 100%; }
+    .avatar { position: relative; }
+    .avatar > * {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
 
     .id { min-width: 0; }
     .name {
@@ -222,7 +227,8 @@
     <!-- ============ PROFILE (layout unchanged) ============ -->
     <header class="profile">
       <div class="profile-inner">
-        <div class="avatar reveal d1" aria-hidden="true">
+        <div class="avatar reveal d1">
+          <!-- placeholder shown if the headshot can't load -->
           <svg viewBox="0 0 214 231" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Profile photo placeholder">
             <defs>
               <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
@@ -236,6 +242,7 @@
               <path d="M55 200c0-33 23-54 52-54s52 21 52 54"/>
             </g>
           </svg>
+          <img src="Profile.jpg" alt="Jasper Chapman" onerror="this.remove()" />
         </div>
 
         <div class="id">
@@ -283,7 +290,7 @@
             </g>
           </svg>
           <!-- real image from the repo; if missing, it removes itself and the placeholder shows -->
-          <img src="morphable-drone.jpg"
+          <img src="DronePreview.jpg"
                alt="Passively morphing aerial-ground robot on pavement"
                onerror="this.remove()" />
         </div>
