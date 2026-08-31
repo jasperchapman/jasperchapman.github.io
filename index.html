@@ -225,20 +225,11 @@
     :focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; border-radius: 6px; }
 
     @media (max-width: 640px) {
-      .profile { padding-top: 0; }
       .profile-inner { flex-direction: column; align-items: stretch; gap: 26px; }
       .avatar {
-        width: 100vw;
-        max-width: 100vw;
-        position: relative;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
+        width: 100%;
+        max-width: none;
         aspect-ratio: 4 / 5;
-        border-radius: 0;
-        border: none;
-        box-shadow: none;
       }
       .avatar > * { object-position: center 30%; }
       .project-info { flex-direction: column; align-items: flex-start; }
