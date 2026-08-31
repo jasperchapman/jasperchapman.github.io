@@ -1,393 +1,374 @@
-<title>Jordan Avery</title>
-<meta name="description" content="Personal profile landing page with a gallery of selected work.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-<style>
-  :root {
-    /* Committed dark scheme — painted explicitly, no host-theme reliance */
-    --bg:        #1a1a1c;
-    --bg-glow:   #212124;
-    --surface:   #232326;
-    --surface-2: #2a2a2e;
-    --text:      #f4f4f5;
-    --text-muted:#a6a6ac;
-    --text-dim:  #79797f;
-    --line:      rgba(255,255,255,0.12);
-    --line-soft: rgba(255,255,255,0.07);
-    --focus:     #ffffff;
-
-    --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-    --font-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
-
-    --maxw: 1080px;
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    background:
-      radial-gradient(1200px 600px at 18% -8%, var(--bg-glow), transparent 60%),
-      var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-
-  a { color: inherit; }
-
-  .wrap {
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: 0 clamp(20px, 5vw, 48px);
-  }
-
-  /* ---------- Profile header ---------- */
-  .profile {
-    padding: clamp(48px, 8vw, 96px) 0 clamp(36px, 5vw, 60px);
-  }
-
-  .profile-inner {
-    display: flex;
-    align-items: center;
-    gap: clamp(28px, 5vw, 56px);
-  }
-
-  .avatar {
-    flex: 0 0 auto;
-    width: clamp(148px, 20vw, 210px);
-    aspect-ratio: 1 / 1.08;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,0.35);
-    overflow: hidden;
-    box-shadow: 0 18px 44px -22px rgba(0,0,0,0.9);
-  }
-  .avatar svg { display: block; width: 100%; height: 100%; }
-
-  .id { min-width: 0; }
-
-  .name {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(2.3rem, 5.6vw, 3.7rem);
-    line-height: 1.02;
-    letter-spacing: -0.02em;
-    margin: 0;
-    text-wrap: balance;
-  }
-
-  .role {
-    margin: clamp(16px, 2.5vw, 22px) 0 0;
-    font-size: clamp(1.02rem, 1.6vw, 1.18rem);
-    color: var(--text-muted);
-    line-height: 1.4;
-  }
-  .role strong { color: var(--text); font-weight: 500; }
-
-  .tagline {
-    margin: 14px 0 0;
-    font-style: italic;
-    color: var(--text-dim);
-    font-size: clamp(0.95rem, 1.4vw, 1.05rem);
-  }
-
-  /* nav */
-  nav.links {
-    margin-top: clamp(22px, 3vw, 30px);
-    display: flex;
-    flex-wrap: wrap;
-    gap: clamp(18px, 2.6vw, 34px);
-  }
-  nav.links a {
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 0.82rem;
-    letter-spacing: 0.09em;
-    color: var(--text-muted);
-    padding-bottom: 4px;
-    border-bottom: 1.5px solid transparent;
-    transition: color .18s ease, border-color .18s ease;
-  }
-  nav.links a:hover,
-  nav.links a:focus-visible { color: var(--text); }
-  nav.links a[aria-current="page"] {
-    color: var(--text);
-    border-bottom-color: var(--text);
-  }
-
-  /* socials */
-  .socials {
-    margin-top: clamp(20px, 2.6vw, 26px);
-    display: flex;
-    gap: 16px;
-  }
-  .socials a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 9px;
-    border: 1px solid var(--line-soft);
-    color: var(--text-muted);
-    transition: color .18s ease, border-color .18s ease, transform .18s ease, background .18s ease;
-  }
-  .socials a:hover,
-  .socials a:focus-visible {
-    color: var(--text);
-    border-color: var(--line);
-    background: var(--surface);
-    transform: translateY(-2px);
-  }
-  .socials svg { width: 18px; height: 18px; display: block; }
-
-  /* ---------- Gallery ---------- */
-  .divider {
-    height: 1px;
-    background: var(--line-soft);
-    margin: clamp(8px, 2vw, 20px) 0 clamp(40px, 6vw, 64px);
-  }
-
-  .gallery-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: clamp(24px, 3.5vw, 34px);
-  }
-  .gallery-head h2 {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(1.5rem, 3vw, 2.1rem);
-    letter-spacing: -0.015em;
-    margin: 0;
-  }
-  .gallery-head .count {
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-dim);
-    font-weight: 600;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(14px, 1.8vw, 22px);
-    padding-bottom: clamp(56px, 8vw, 96px);
-  }
-  @media (max-width: 760px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 460px) { .grid { grid-template-columns: 1fr; } }
-
-  .tile {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--line-soft);
-    cursor: pointer;
-    display: block;
-    text-decoration: none;
-    color: var(--text);
-  }
-  .tile .art { position: absolute; inset: 0; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
-  .tile .art svg { width: 100%; height: 100%; display: block; }
-  .tile:hover .art, .tile:focus-visible .art { transform: scale(1.06); }
-
-  .tile .veil {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(12,12,14,0.86) 0%, rgba(12,12,14,0.15) 46%, transparent 68%);
-    opacity: 0.85;
-    transition: opacity .3s ease;
-  }
-  .tile:hover .veil, .tile:focus-visible .veil { opacity: 1; }
-
-  .tile .meta {
-    position: absolute;
-    left: 16px; right: 16px; bottom: 14px;
-    transform: translateY(6px);
-    opacity: 0;
-    transition: transform .32s ease, opacity .32s ease;
-  }
-  .tile:hover .meta, .tile:focus-visible .meta { transform: translateY(0); opacity: 1; }
-  .tile .meta .t { display: block; font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; }
-  .tile .meta .s { display: block; font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
-
-  .tile .idx {
-    position: absolute; top: 12px; left: 14px;
-    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em;
-    color: rgba(255,255,255,0.72);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .tile--link { border-color: var(--line); }
-  .tile .tag {
-    position: absolute; top: 11px; right: 12px;
-    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
-    color: var(--text);
-    background: rgba(20,20,22,0.72);
-    border: 1px solid var(--line);
-    padding: 4px 9px;
-    border-radius: 999px;
-    backdrop-filter: blur(3px);
-  }
-
-  /* ---------- footer note ---------- */
-  footer {
-    border-top: 1px solid var(--line-soft);
-    padding: 28px 0 56px;
-    color: var(--text-dim);
-    font-size: 0.85rem;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  footer a { text-decoration: none; color: var(--text-muted); }
-  footer a:hover { color: var(--text); }
-
-  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
-
-  @media (max-width: 640px) {
-    .profile-inner { flex-direction: column; align-items: flex-start; }
-  }
-
-  /* entrance */
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
-    .d1 { animation-delay: .05s; } .d2 { animation-delay: .13s; }
-    .d3 { animation-delay: .21s; } .d4 { animation-delay: .29s; }
-    @keyframes rise { to { opacity: 1; transform: none; } }
-  }
-</style>
-
-<div class="wrap">
-  <!-- ============ PROFILE ============ -->
-  <header class="profile">
-    <div class="profile-inner">
-      <div class="avatar reveal d1" aria-hidden="true">
-        <!-- filler portrait placeholder -->
-        <svg viewBox="0 0 210 227" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Profile photo placeholder">
-          <defs>
-            <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#33333a"/>
-              <stop offset="1" stop-color="#1d1d20"/>
-            </linearGradient>
-          </defs>
-          <rect width="210" height="227" fill="url(#pg)"/>
-          <g fill="none" stroke="#5a5a63" stroke-width="2.4">
-            <circle cx="105" cy="92" r="34"/>
-            <path d="M54 196c0-32 23-53 51-53s51 21 51 53"/>
-          </g>
-        </svg>
-      </div>
-
-      <div class="id">
-        <h1 class="name reveal d1">Jordan Avery</h1>
-        <p class="role reveal d2">
-          <strong>Robotics Researcher</strong> · Manipulation &amp; Learning<br>
-          Carnegie Mellon University
-        </p>
-        <p class="tagline reveal d2">Building machines that adapt to the world around them.</p>
-
-        <nav class="links reveal d3" aria-label="Primary">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jasper Chapman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0d1116;
+      --cream: #f4efe5;
+      --muted: #d8d3c8;
+      --line: rgba(244, 239, 229, 0.25);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: 100%; margin: 0; padding: 0 3.8%; }
+    .topbar { border-bottom: 1px solid var(--line); }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 0 22px;
+    }
+    nav .brand {
+      font-weight: 600;
+      font-size: 1.35rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    nav .menu a {
+      font-size: 1.1rem;
+      margin-left: 40px;
+      letter-spacing: 0.01em;
+    }
+    nav .menu a.active { text-decoration: underline; text-underline-offset: 6px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 48px;
+      align-items: start;
+      padding: 40px 0 44px;
+    }
+    .hero h1 {
+      margin: 0;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: max(1.6rem, 3.6vw);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+    }
+    .hero .lede {
+      margin: 10px 0 0;
+      font-size: clamp(1rem, 1.3vw, 1.25rem);
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 42ch;
+    }
+    .hero-image {
+      width: 100%;
+      display: block;
+      border-radius: 24px;
+      aspect-ratio: 2768 / 1068;
+      object-fit: cover;
+    }
+    .block {
+      text-align: center;
+      padding: 90px 0 20px;
+    }
+    .block-title {
+      margin: 0 0 34px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+    }
+    .block-body {
+      margin: 0 auto;
+      max-width: 46ch;
+      font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    .sol { padding: 84px 3.8% 40px; }
+    .sol-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      grid-template-areas:
+        "title  title"
+        "intro  figure"
+        "list   figure";
+      column-gap: 56px;
+      align-items: start;
+    }
+    .sol-title {
+      grid-area: title;
+      margin: 0 0 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+    }
+    .sol-intro {
+      grid-area: intro;
+      margin: 4px 0 44px;
+      font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+      line-height: 1.5;
+      color: var(--cream);
+      max-width: 54ch;
+    }
+    .sol-list { grid-area: list; min-width: 0; }
+    .sol-fig {
+      grid-area: figure;
+      margin: 0;
+      min-width: 0;
+      align-self: center;
+      justify-self: end;
+    }
+    .sol-fig img {
+      width: 100%;
+      max-width: 620px;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+    }
+    .sol-item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 14px;
+      margin-bottom: 54px;
+    }
+    .sol-item:last-child { margin-bottom: 0; }
+    .sol-num { font-size: clamp(1.2rem, 1.7vw, 1.6rem); font-weight: 500; line-height: 1.1; }
+    .sol-item h3 {
+      margin: 0 0 14px;
+      font-weight: 600;
+      font-size: clamp(1.3rem, 1.9vw, 1.7rem);
+    }
+    .sol-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.5;
+      max-width: 52ch;
+    }
+    .solution {
+      background: #ffffff;
+      color: #17233f;
+      margin-top: 70px;
+    }
+    .solution-inner {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 56px;
+      align-items: center;
+      padding: 48px 3.8%;
+    }
+    .solution-inner > * { min-width: 0; }
+    .exploded-media { width: 100%; text-align: center; }
+    .exploded-media video,
+    .exploded-media img {
+      max-width: 100%;
+      max-height: 420px;
+      width: auto;
+      height: auto;
+      display: inline-block;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+    .exploded-caption {
+      font-weight: 500;
+      line-height: 1.25;
+      font-size: clamp(1.5rem, 2.7vw, 2.4rem);
+      color: #17233f;
+    }
+    @media (max-width: 800px) {
+      .solution-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 36px 3.8%;
+      }
+      .hero { grid-template-columns: 1fr; gap: 20px; padding: 28px 0; }
+      nav .menu a { margin-left: 22px; }
+      nav .brand { font-size: 1.1rem; }
+      .sol-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas: "title" "intro" "figure" "list";
+        row-gap: 8px;
+      }
+      .sol-title { margin-bottom: 8px; }
+      .sol-intro { margin-bottom: 32px; }
+      .sol-fig { justify-self: center; margin: 0 auto 36px; }
+      .sol-fig img { max-width: 520px; }
+    }
+    .paper { text-align: center; padding: 96px 0 40px; }
+    .paper h2 {
+      margin: 0 0 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+    }
+    .paper p {
+      margin: 0 auto 34px;
+      max-width: 52ch;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      line-height: 1.6;
+    }
+    .paper-btn {
+      display: inline-block;
+      background: var(--cream);
+      color: #0d1116;
+      padding: 15px 32px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: opacity 0.15s ease;
+    }
+    .paper-btn:hover { opacity: 0.85; }
+    footer { margin-top: 90px; border-top: 1px solid var(--line); }
+    .footer-inner {
+      padding: 28px 3.8%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-brand {
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .footer-links { display: flex; gap: 26px; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.95rem; color: var(--muted); transition: color 0.15s ease; }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-copy { font-size: 0.85rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <nav>
+        <a href="index.html" class="brand">Jasper Chapman</a>
+        <div class="menu">
+          <a href="index.html" class="active">Projects</a>
           <a href="#about">About</a>
-          <a href="#news">News</a>
-          <a href="#work">Publications</a>
-          <a href="#gallery" aria-current="page">Gallery</a>
-          <a href="#cv">CV / Résumé</a>
-        </nav>
-
-        <div class="socials reveal d4">
-          <a href="#" aria-label="Email">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-          </a>
-          <a href="#" aria-label="Google Scholar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 9l10 6 10-6-10-6Z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/></svg>
-          </a>
-          <a href="#" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.22-3.37-1.22-.46-1.18-1.11-1.5-1.11-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.05 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.92-2.34 4.79-4.57 5.04.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.6.69.49A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
-          </a>
-          <a href="#" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C21.4 8.75 22 11 22 14v7h-4v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.6-2.38 3.27V21h-4V9Z"/></svg>
-          </a>
-          <a href="#" aria-label="X">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.53 3H21l-7.19 8.21L22.5 21h-6.6l-5.17-6.76L4.8 21H1.33l7.7-8.79L1.5 3h6.77l4.68 6.19L17.53 3Zm-1.16 16h1.83L7.72 4.9H5.76L16.37 19Z"/></svg>
-          </a>
         </div>
-      </div>
+      </nav>
     </div>
   </header>
-
-  <div class="divider"></div>
-
-  <!-- ============ GALLERY ============ -->
-  <section id="gallery" aria-labelledby="gallery-h">
-    <div class="gallery-head">
-      <h2 id="gallery-h">Selected Work</h2>
-      <span class="count">Six projects</span>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Passively Morphing Aerial-Ground Robot</h1>
+      <p class="lede">
+        A palm-sized robot that flies over obstacles and rolls through tight
+        spaces, switching between flight and driving using only its own thrust.
+      </p>
+    </section>
+    <img class="hero-image" src="morphable-drone.jpg"
+         alt="Morphable aerial-ground robot on pavement" />
+    <section class="block">
+      <h2 class="block-title">Problem</h2>
+      <p class="block-body">
+        Robots that explore tight, unpredictable spaces face a hard tradeoff.
+        Flying clears obstacles but drains the battery, while driving is efficient
+        but gets stopped by a single step. Doing both usually means adding a
+        separate motor to switch modes, which is heavy, power-hungry, and one
+        more part to fail.
+      </p>
+    </section>
+  </div>
+  <section class="solution">
+    <div class="wrap solution-inner">
+      <div class="exploded-media">
+        <video id="explodedVideo" muted loop playsinline disablepictureinpicture
+               controlslist="nodownload noplaybackrate nofullscreen"
+               tabindex="-1" poster="exploded-view-poster.jpg">
+          <source src="exploded-view.mp4" type="video/mp4" />
+          <img src="exploded-view-poster.jpg" alt="Exploded view of drone arms and tracks" />
+        </video>
+      </div>
+      <p class="exploded-caption">
+        Exploded view of drone arms and tracks with folding demonstration
+      </p>
     </div>
-    <div class="grid" id="grid"></div>
   </section>
-
+  <section class="wrap sol">
+    <div class="sol-grid">
+      <h2 class="sol-title">Solution</h2>
+      <p class="sol-intro">
+        A palm-sized robot that flies to clear obstacles and drives to cover
+        ground, switching between the two on its own.
+      </p>
+      <div class="sol-list">
+        <div class="sol-item">
+          <span class="sol-num">1</span>
+          <div class="sol-text">
+            <h3>The bistable hinge</h3>
+            <p>No motor does the transforming: propeller thrust snaps it up into
+               flight, and the jolt of landing folds it back down to drive.</p>
+          </div>
+        </div>
+        <div class="sol-item">
+          <span class="sol-num">2</span>
+          <div class="sol-text">
+            <h3>Two ways to move</h3>
+            <p>It flies like a quadrotor to jump obstacles, then rolls on tank
+               tracks to cover ground without draining the battery.</p>
+          </div>
+        </div>
+        <div class="sol-item">
+          <span class="sol-num">3</span>
+          <div class="sol-text">
+            <h3>A fraction of the size</h3>
+            <p>At just 200 grams it fits in your palm, making it 3 to 30 times
+               lighter than other robots that both fly and drive.</p>
+          </div>
+        </div>
+      </div>
+      <figure class="sol-fig">
+        <img src="solution-robot.jpg" alt="Front view of the morphing aerial-ground robot" />
+      </figure>
+    </div>
+  </section>
+  <section class="wrap paper">
+    <h2>Read the full paper</h2>
+    <p>
+      Want the mechanism, controls, and flight-to-drive transition in full
+      detail? The complete technical write-up covers the design and results.
+    </p>
+    <a class="paper-btn" href="morphing-drone-paper.pdf" target="_blank" rel="noopener">
+      Read the full paper &rarr;
+    </a>
+  </section>
   <footer>
-    <span>© 2026 Jordan Avery</span>
-    <span><a href="#top">Back to top ↑</a></span>
+    <div class="wrap footer-inner">
+      <span class="footer-brand">Jasper Chapman</span>
+      <span class="footer-copy">&copy; <span id="year"></span></span>
+    </div>
   </footer>
-</div>
-
-<script>
-  // Filler gallery tiles — generated placeholder "images" (abstract gradient art).
-  const items = [
-    { t: "Morphing Aerial-Ground Robot", s: "Flight + drive · Project page", a: 205, b: 250,
-      href: "https://mauve-apricots-c6zj.squarespace.com/" },
-    { t: "Adaptive Gripper",   s: "Compliant manipulation", a: 18,  b: 232 },
-    { t: "Terrain Planner",    s: "Legged locomotion",      a: 150, b: 195 },
-    { t: "Tactile Sensing",    s: "Soft robotics",          a: 262, b: 300 },
-    { t: "Vision Pipeline",    s: "Perception",             a: 32,  b: 62  },
-    { t: "Sim-to-Real",        s: "Reinforcement learning", a: 96,  b: 128 },
-  ];
-
-  // Neutral / monochrome placeholder art — no color accent, just tone + geometry.
-  function art(seed, hueA, hueB) {
-    const id = "g" + seed;
-    const rot = (seed * 47) % 180;
-    // muted, desaturated tones so tiles read as "filler images", not decoration
-    const c1 = `hsl(${hueA}, 8%, 26%)`;
-    const c2 = `hsl(${hueB}, 10%, 15%)`;
-    const stroke = "rgba(255,255,255,0.10)";
-    const shapes = [
-      `<circle cx="${60+seed*7%120}" cy="${70+seed*11%90}" r="${40+seed*5%40}" fill="none" stroke="${stroke}" stroke-width="1.4"/>`,
-      `<rect x="${30+seed*9%140}" y="${20+seed*7%110}" width="120" height="120" fill="none" stroke="${stroke}" stroke-width="1.4" transform="rotate(${rot} 120 100)"/>`,
-      `<path d="M0 ${140+seed%40} Q 100 ${60+seed%80} 320 ${120+seed%40}" fill="none" stroke="${stroke}" stroke-width="1.4"/>`,
-    ].join("");
-    return `
-      <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Placeholder image">
-        <defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/>
-        </linearGradient></defs>
-        <rect width="320" height="240" fill="url(#${id})"/>
-        ${shapes}
-      </svg>`;
-  }
-
-  const grid = document.getElementById("grid");
-  items.forEach((it, i) => {
-    const el = document.createElement("a");
-    el.href = it.href || "#";
-    if (it.href) { el.target = "_blank"; el.rel = "noopener"; }
-    el.className = "tile" + (it.href ? " tile--link" : "") + (i < 6 ? " reveal d" + Math.min(4, i % 4 + 1) : "");
-    el.innerHTML =
-      `<div class="art">${art(i + 1, it.a, it.b)}</div>` +
-      `<div class="veil"></div>` +
-      `<span class="idx">${String(i + 1).padStart(2, "0")}</span>` +
-      (it.href ? `<span class="tag">View project ↗</span>` : "") +
-      `<div class="meta"><span class="t">${it.t}</span><span class="s">${it.s}</span></div>`;
-    grid.appendChild(el);
-  });
-</script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    (function () {
+      var video = document.getElementById("explodedVideo");
+      if (!video) return;
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              video.play().catch(function () {});
+              observer.unobserve(video);
+            }
+          });
+        }, { threshold: 0.35 });
+        observer.observe(video);
+      } else {
+        video.play().catch(function () {});
+      }
+    })();
+  </script>
+</body>
+</html>
