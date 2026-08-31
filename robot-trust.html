@@ -207,6 +207,10 @@
       nav .brand { font-size: 1.1rem; }
       .study-inner { grid-template-columns: 1fr; gap: 24px; padding: 44px 3.8%; }
     }
+    /* On phones, use a taller crop so the cover reads larger (keeps the bottom edge) */
+    @media (max-width: 640px) {
+      .hero-image-wrap { aspect-ratio: 4 / 3; }
+    }
   </style>
 </head>
 <body>
