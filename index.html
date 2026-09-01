@@ -20,12 +20,19 @@
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
+    html { background: var(--navy); }
     body {
       background: var(--navy);
       color: var(--cream);
       font-family: var(--font);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      /* sticky footer: hold the footer at the bottom even on short/phone screens */
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overscroll-behavior-y: none;
     }
     a { color: inherit; text-decoration: none; }
     .wrap { width: 100%; margin: 0; padding: 0 3.8%; }
@@ -122,7 +129,27 @@
     /* ---------- Projects (one listed project) ---------- */
     .divider { height: 1px; background: var(--line-soft); margin: clamp(6px,1.5vw,16px) 3.8% clamp(36px,4.5vw,56px); }
 
-    .projects { padding-bottom: clamp(20px, 3vw, 40px); }
+    .projects { padding-bottom: clamp(40px, 6vw, 80px); }
+
+    .more-soon {
+      margin-top: clamp(30px, 4vw, 46px);
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.98rem;
+      letter-spacing: 0.03em;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .more-soon.in { opacity: 1; transform: none; }
+    .more-soon .dot {
+      display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--muted); margin-right: 9px; vertical-align: middle;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .more-soon .dot { animation: soonpulse 1.7s ease-in-out infinite; }
+      @keyframes soonpulse { 0%,100%{opacity:.3;transform:scale(.8);} 50%{opacity:1;transform:scale(1);} }
+    }
     .projects-head {
       margin-bottom: clamp(22px, 3vw, 32px);
       text-align: center;
@@ -213,7 +240,9 @@
     .project-card:focus-visible .project-cta .arrow { transform: translateX(4px); }
 
     /* ---------- footer ---------- */
-    footer { margin-top: clamp(50px,7vw,90px); border-top: 1px solid var(--line); }
+    footer { margin-top: auto; border-top: 1px solid var(--line); }
+    .footer-brand { transition: opacity .16s ease; }
+    a.footer-brand:hover, a.footer-brand:focus-visible { opacity: 0.7; }
     .footer-inner {
       padding: 26px 3.8%;
       display: flex; align-items: center; justify-content: space-between;
@@ -262,7 +291,7 @@
               <path d="M55 200c0-33 23-54 52-54s52 21 52 54"/>
             </g>
           </svg>
-          <img src="Profile.jpg" alt="Jasper Chapman" onerror="this.remove()" />
+          <img src="Profile.jpg" alt="Jasper Chapman" decoding="async" fetchpriority="high" onerror="this.remove()" />
         </div>
 
         <div class="id">
@@ -315,6 +344,7 @@
             </svg>
             <img src="DronePreview.jpg"
                  alt="Passively morphing aerial-ground robot on pavement"
+                 loading="lazy" decoding="async"
                  onerror="this.remove()" />
           </div>
           <div class="project-info">
@@ -349,6 +379,7 @@
             </svg>
             <img src="RobotTrustPreview.jpg"
                  alt="Human-robot trust study with the Misty II robot"
+                 loading="lazy" decoding="async"
                  onerror="this.remove()" />
           </div>
           <div class="project-info">
@@ -364,18 +395,36 @@
           </div>
         </a>
       </div>
+
+      <p class="more-soon" id="moreSoon"><span class="dot"></span>More coming soon</p>
     </section>
   </div>
 
   <footer>
     <div class="footer-inner">
-      <span class="footer-brand">Jasper Chapman</span>
+      <a href="index.html" class="footer-brand">Jasper Chapman</a>
       <span class="footer-copy">&copy; <span id="year"></span></span>
     </div>
   </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Reveal the "More coming soon" line when it scrolls into view.
+    (function () {
+      var ms = document.getElementById("moreSoon");
+      if (!ms) return;
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { ms.classList.add("in"); io.unobserve(ms); }
+          });
+        }, { threshold: 0.4 });
+        io.observe(ms);
+      } else {
+        ms.classList.add("in");
+      }
+    })();
   </script>
 </body>
 </html>
