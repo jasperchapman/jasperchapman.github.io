@@ -6,381 +6,424 @@
   <title>Jasper Chapman</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,800;0,900;1,400;1,500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy: #0d1116;
       --cream: #f4efe5;
       --muted: #d8d3c8;
+      --dim: #9a968d;
       --line: rgba(244, 239, 229, 0.25);
+      --line-soft: rgba(244, 239, 229, 0.12);
+      --surface: #141a21;
+      --font: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
+    html { background: var(--navy); }
     body {
       background: var(--navy);
       color: var(--cream);
-      font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: var(--font);
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      /* sticky footer: hold the footer at the bottom even on short/phone screens */
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overscroll-behavior-y: none;
     }
     a { color: inherit; text-decoration: none; }
     .wrap { width: 100%; margin: 0; padding: 0 3.8%; }
-    .topbar { border-bottom: 1px solid var(--line); }
-    nav {
+
+    /* ---------- Profile header (layout kept) ---------- */
+    .profile { padding: clamp(44px, 7vw, 88px) 0 clamp(30px, 4vw, 48px); }
+    .profile-inner {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 28px 0 22px;
+      gap: clamp(28px, 4.5vw, 56px);
     }
-    nav .brand {
-      font-weight: 600;
-      font-size: 1.35rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+    .avatar {
+      flex: 0 0 auto;
+      width: clamp(200px, 26vw, 300px);
+      aspect-ratio: 1 / 1.08;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      box-shadow: 0 20px 46px -24px rgba(0,0,0,0.85);
     }
-    nav .menu a {
-      font-size: 1.1rem;
-      margin-left: 40px;
-      letter-spacing: 0.01em;
+    .avatar { position: relative; }
+    .avatar > * {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
     }
-    nav .menu a.active { text-decoration: underline; text-underline-offset: 6px; }
-    .hero {
-      display: grid;
-      grid-template-columns: 1.6fr 1fr;
-      gap: 48px;
-      align-items: start;
-      padding: 40px 0 44px;
-    }
-    .hero h1 {
+
+    .id { min-width: 0; }
+    .name {
       margin: 0;
-      font-weight: 900;
-      text-transform: uppercase;
-      font-size: max(1.6rem, 3.6vw);
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5.8vw, 3.9rem);
       line-height: 1.0;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
+      text-wrap: balance;
     }
-    .hero .lede {
-      margin: 10px 0 0;
-      font-size: clamp(1rem, 1.3vw, 1.25rem);
+    .role {
+      margin: clamp(16px, 2.4vw, 24px) 0 0;
+      font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+      line-height: 1.4;
+      color: var(--muted);
+    }
+    .role strong { color: var(--cream); font-weight: 600; }
+    .tagline {
+      margin: 14px 0 0;
+      font-style: italic;
+      color: var(--dim);
+      font-size: clamp(0.95rem, 1.3vw, 1.08rem);
       line-height: 1.5;
-      color: var(--muted);
-      max-width: 42ch;
+      max-width: 58ch;
     }
-    .hero-image {
-      width: 100%;
-      display: block;
-      border-radius: 24px;
-      aspect-ratio: 2768 / 1068;
-      object-fit: cover;
-    }
-    .block {
-      text-align: center;
-      padding: 90px 0 20px;
-    }
-    .block-title {
-      margin: 0 0 34px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      font-size: clamp(1.6rem, 2.6vw, 2.3rem);
-    }
-    .block-body {
-      margin: 0 auto;
-      max-width: 46ch;
-      font-size: clamp(1.05rem, 1.5vw, 1.35rem);
-      line-height: 1.6;
-      color: var(--muted);
-    }
-    .sol { padding: 84px 3.8% 40px; }
-    .sol-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      grid-template-areas:
-        "title  title"
-        "intro  figure"
-        "list   figure";
-      column-gap: 56px;
-      align-items: start;
-    }
-    .sol-title {
-      grid-area: title;
-      margin: 0 0 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      font-size: clamp(1.6rem, 2.6vw, 2.3rem);
-    }
-    .sol-intro {
-      grid-area: intro;
-      margin: 4px 0 44px;
-      font-size: clamp(1.05rem, 1.4vw, 1.3rem);
-      line-height: 1.5;
-      color: var(--cream);
-      max-width: 54ch;
-    }
-    .sol-list { grid-area: list; min-width: 0; }
-    .sol-fig {
-      grid-area: figure;
-      margin: 0;
-      min-width: 0;
-      align-self: center;
-      justify-self: end;
-    }
-    .sol-fig img {
-      width: 100%;
-      max-width: 620px;
-      height: auto;
-      display: block;
-      border-radius: 14px;
-    }
-    .sol-item {
-      display: grid;
-      grid-template-columns: 34px 1fr;
-      gap: 14px;
-      margin-bottom: 54px;
-    }
-    .sol-item:last-child { margin-bottom: 0; }
-    .sol-num { font-size: clamp(1.2rem, 1.7vw, 1.6rem); font-weight: 500; line-height: 1.1; }
-    .sol-item h3 {
-      margin: 0 0 14px;
-      font-weight: 600;
-      font-size: clamp(1.3rem, 1.9vw, 1.7rem);
-    }
-    .sol-item p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.5;
-      max-width: 52ch;
-    }
-    .solution {
-      background: #ffffff;
-      color: #17233f;
-      margin-top: 70px;
-    }
-    .solution-inner {
-      display: grid;
-      grid-template-columns: 1.9fr 1fr;
-      gap: 48px;
-      align-items: center;
-      padding: 24px 3.8%;
-    }
-    .solution-inner > * { min-width: 0; }
-    .exploded-media { width: 100%; text-align: center; }
-    .exploded-media { width: 100%; }
-    .exploded-media video,
-    .exploded-media img {
-      max-width: 100%;
-      max-height: 560px;
-      width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-    .exploded-media video { cursor: pointer; }
-    .exploded-caption {
-      font-weight: 500;
-      line-height: 1.25;
-      font-size: clamp(1.5rem, 2.7vw, 2.4rem);
-      color: #17233f;
-    }
-    @media (max-width: 800px) {
-      .solution-inner {
-        grid-template-columns: 1fr;
-        gap: 24px;
-        padding: 36px 3.8%;
-      }
-      .hero { grid-template-columns: 1fr; gap: 20px; padding: 28px 0; }
-      nav .menu a { margin-left: 22px; }
-      nav .brand { font-size: 1.1rem; }
-      .sol-grid {
-        grid-template-columns: 1fr;
-        grid-template-areas: "title" "intro" "figure" "list";
-        row-gap: 8px;
-      }
-      .sol-title { margin-bottom: 8px; }
-      .sol-intro { margin-bottom: 32px; }
-      .sol-fig { justify-self: center; margin: 0 auto 36px; }
-      .sol-fig img { max-width: 520px; }
-    }
-    /* Phones: zoom the hero into its center with a taller crop, and let the video fill */
-    @media (max-width: 640px) {
-      .hero-image { aspect-ratio: 4 / 3; object-position: center; }
-      /* Make the exploded-view video span nearly the full phone screen */
-      .solution-inner { padding: 20px 0 26px; gap: 14px; }
-      .exploded-media video,
-      .exploded-media img { width: 100%; height: auto; max-height: none; border-radius: 0; }
-      .exploded-caption { padding: 0 5%; }
-    }
-    .paper { text-align: center; padding: 96px 0 40px; }
-    .paper h2 {
-      margin: 0 0 16px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      font-size: clamp(1.6rem, 2.6vw, 2.3rem);
-    }
-    .paper p {
-      margin: 0 auto 34px;
-      max-width: 52ch;
-      color: var(--muted);
-      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-      line-height: 1.6;
-    }
-    .paper-btn {
-      display: inline-block;
-      background: var(--cream);
-      color: #0d1116;
-      padding: 15px 32px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 1.05rem;
-      transition: opacity 0.15s ease;
-    }
-    .paper-btn:hover { opacity: 0.85; }
-    footer { margin-top: 90px; border-top: 1px solid var(--line); }
-    .footer-inner {
-      padding: 28px 3.8%;
+
+    nav.links {
+      margin-top: clamp(22px, 3vw, 30px);
       display: flex;
-      align-items: center;
-      justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: clamp(20px, 2.6vw, 38px);
     }
-    .footer-brand {
-      font-weight: 600;
-      font-size: 1rem;
-      letter-spacing: 0.06em;
+    nav.links a {
       text-transform: uppercase;
+      font-weight: 600;
+      font-size: 0.86rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding-bottom: 3px;
+      transition: color .16s ease;
     }
-    .footer-links { display: flex; gap: 26px; flex-wrap: wrap; }
-    .footer-links a { font-size: 0.95rem; color: var(--muted); transition: color 0.15s ease; }
-    .footer-links a:hover { color: var(--cream); }
+    nav.links a:hover, nav.links a:focus-visible { color: var(--cream); }
+    nav.links a[aria-current="page"] {
+      color: var(--cream);
+      text-decoration: underline;
+      text-underline-offset: 6px;
+    }
+
+    .socials { margin-top: clamp(20px, 2.5vw, 26px); display: flex; gap: 14px; }
+    .socials a {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--line-soft);
+      color: var(--muted);
+      transition: color .16s ease, border-color .16s ease, background .16s ease, transform .16s ease;
+    }
+    .socials a:hover, .socials a:focus-visible {
+      color: var(--cream); border-color: var(--line);
+      background: var(--surface); transform: translateY(-2px);
+    }
+    .socials svg { width: 19px; height: 19px; display: block; flex: 0 0 auto; }
+    .socials a.resume-btn {
+      width: auto; gap: 9px; padding: 0 16px;
+      font-weight: 600; font-size: 0.92rem; letter-spacing: 0.01em;
+    }
+
+    /* ---------- Projects (one listed project) ---------- */
+    .divider { height: 1px; background: var(--line-soft); margin: clamp(6px,1.5vw,16px) 3.8% clamp(36px,4.5vw,56px); }
+
+    .projects { padding-bottom: clamp(40px, 6vw, 80px); }
+
+    .more-soon {
+      margin-top: clamp(30px, 4vw, 46px);
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.98rem;
+      letter-spacing: 0.03em;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .more-soon.in { opacity: 1; transform: none; }
+    .more-soon .dot {
+      display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--muted); margin-right: 9px; vertical-align: middle;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .more-soon .dot { animation: soonpulse 1.7s ease-in-out infinite; }
+      @keyframes soonpulse { 0%,100%{opacity:.3;transform:scale(.8);} 50%{opacity:1;transform:scale(1);} }
+    }
+    .projects-head {
+      margin-bottom: clamp(22px, 3vw, 32px);
+      text-align: center;
+    }
+    .projects-head h2 {
+      margin: 0;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(16px, 2vw, 26px);
+      width: 100%;
+    }
+    @media (max-width: 760px) {
+      .project-grid { grid-template-columns: 1fr; }
+    }
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--line-soft);
+      background: var(--surface);
+      transition: border-color .2s ease, transform .2s ease;
+    }
+    .project-card:hover, .project-card:focus-visible {
+      border-color: var(--line);
+      transform: translateY(-3px);
+    }
+
+    .project-media {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #10161d;
+    }
+    .project-media > * {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform .5s cubic-bezier(.2,.7,.2,1);
+    }
+    .project-card:hover .project-media > *,
+    .project-card:focus-visible .project-media > * { transform: scale(1.045); }
+
+    .project-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: clamp(20px, 2.2vw, 28px) clamp(22px, 2.4vw, 30px) clamp(20px, 2.4vw, 26px);
+    }
+    .project-text { min-width: 0; }
+    .project-eyebrow {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--dim); font-weight: 600; margin: 0 0 10px;
+    }
+    .project-title {
+      margin: 0;
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      font-size: clamp(1.5rem, 2.6vw, 2.15rem);
+    }
+    .project-desc {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.3vw, 1.12rem);
+      line-height: 1.5;
+    }
+    .project-cta {
+      align-self: flex-start;
+      margin-top: auto;
+      padding-top: 18px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 600; font-size: 1rem;
+      color: var(--cream);
+      white-space: nowrap;
+    }
+    .project-cta .arrow { transition: transform .2s ease; }
+    .project-card:hover .project-cta .arrow,
+    .project-card:focus-visible .project-cta .arrow { transform: translateX(4px); }
+
+    /* ---------- footer ---------- */
+    footer { margin-top: auto; border-top: 1px solid var(--line); }
+    .footer-brand { transition: opacity .16s ease; }
+    a.footer-brand:hover, a.footer-brand:focus-visible { opacity: 0.7; }
+    .footer-inner {
+      padding: 26px 3.8%;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px;
+    }
+    .footer-brand { font-weight: 600; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; }
     .footer-copy { font-size: 0.85rem; color: var(--muted); }
+
+    :focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; border-radius: 6px; }
+
+    @media (max-width: 640px) {
+      .profile-inner { flex-direction: column; align-items: stretch; gap: 26px; }
+      .avatar {
+        width: 100%;
+        max-width: none;
+        aspect-ratio: 4 / 5;
+      }
+      .avatar > * { object-position: center 30%; }
+      .project-info { flex-direction: column; align-items: flex-start; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+      .d1 { animation-delay: .04s; } .d2 { animation-delay: .12s; }
+      .d3 { animation-delay: .2s; } .d4 { animation-delay: .28s; }
+      @keyframes rise { to { opacity: 1; transform: none; } }
+    }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="wrap">
-      <nav>
-        <a href="index.html" class="brand">Jasper Chapman</a>
-        <div class="menu">
-          <a href="index.html" class="active">Projects</a>
-          <a href="index.html#about">About</a>
-        </div>
-      </nav>
-    </div>
-  </header>
   <div class="wrap">
-    <section class="hero">
-      <h1>Passively Morphing Aerial-Ground Robot</h1>
-      <p class="lede">
-        A palm-sized robot that flies over obstacles and rolls through tight
-        spaces, switching between flight and driving using only its own thrust.
-      </p>
-    </section>
-    <img class="hero-image" src="morphable-drone.jpg"
-         alt="Morphable aerial-ground robot on pavement" />
-    <section class="block">
-      <h2 class="block-title">Problem</h2>
-      <p class="block-body">
-        Robots that explore tight, unpredictable spaces face a hard tradeoff.
-        Flying clears obstacles but drains the battery, while driving is efficient
-        but gets stopped by a single step. Doing both usually means adding a
-        separate motor to switch modes, which is heavy, power-hungry, and one
-        more part to fail.
-      </p>
+    <!-- ============ PROFILE (layout unchanged) ============ -->
+    <header class="profile">
+      <div class="profile-inner">
+        <div class="avatar reveal d1">
+          <!-- placeholder shown if the headshot can't load -->
+          <svg viewBox="0 0 214 231" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Profile photo placeholder">
+            <defs>
+              <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#1c242e"/>
+                <stop offset="1" stop-color="#0e1218"/>
+              </linearGradient>
+            </defs>
+            <rect width="214" height="231" fill="url(#pg)"/>
+            <g fill="none" stroke="rgba(244,239,229,0.35)" stroke-width="2.4">
+              <circle cx="107" cy="94" r="35"/>
+              <path d="M55 200c0-33 23-54 52-54s52 21 52 54"/>
+            </g>
+          </svg>
+          <img src="Profile.jpg" alt="Jasper Chapman" decoding="async" fetchpriority="high" onerror="this.remove()" />
+        </div>
+
+        <div class="id">
+          <h1 class="name reveal d1">Jasper Chapman</h1>
+          <p class="role reveal d2">
+            <strong>B.S. Mechanical Engineering</strong> · Additional Major in Robotics<br>
+            Carnegie Mellon University · Class of 2029
+          </p>
+          <p class="tagline reveal d2">Undergraduate engineer building things that move, and things that matter, from self-transforming robots to a nonprofit that funded classrooms in Sierra Leone.</p>
+
+          <div class="socials reveal d3">
+            <a href="mailto:jmchapma@andrew.cmu.edu" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/jasper-chapman" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C21.4 8.75 22 11 22 14v7h-4v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.6-2.38 3.27V21h-4V9Z"/></svg>
+            </a>
+            <a class="resume-btn" href="Jasper_Chapman_Resume.pdf" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+            <span>Résumé</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="wrap">
+    <!-- ============ PROJECTS: one listed project ============ -->
+    <section id="projects" class="projects" aria-labelledby="projects-h">
+      <div class="projects-head">
+        <h2 id="projects-h">Projects</h2>
+      </div>
+
+      <div class="project-grid">
+        <!-- Project 1: clicking the card / image opens the drone project page -->
+        <a class="project-card reveal d2" href="morphing-drone.html">
+          <div class="project-media">
+            <svg class="ph" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Project preview placeholder">
+              <defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#1b2530"/><stop offset="1" stop-color="#0e131a"/>
+              </linearGradient></defs>
+              <rect width="320" height="180" fill="url(#mg)"/>
+              <g fill="none" stroke="rgba(244,239,229,0.16)" stroke-width="1.6">
+                <circle cx="120" cy="90" r="46"/><circle cx="120" cy="90" r="70"/>
+                <path d="M40 128 Q160 60 300 106"/>
+              </g>
+            </svg>
+            <img src="DronePreview.jpg"
+                 alt="Passively morphing aerial-ground robot on pavement"
+                 loading="lazy" decoding="async"
+                 onerror="this.remove()" />
+          </div>
+          <div class="project-info">
+            <div class="project-text">
+              <p class="project-eyebrow">Robotics · 2026</p>
+              <h3 class="project-title">Passively Morphing Aerial-Ground Robot</h3>
+              <p class="project-desc">
+                A palm-sized robot that flies over obstacles and rolls through tight
+                spaces, switching between flight and driving using only its own thrust.
+              </p>
+            </div>
+            <span class="project-cta">View project <span class="arrow">&rarr;</span></span>
+          </div>
+        </a>
+
+        <!-- Project 2: HRI robot-trust study -->
+        <a class="project-card reveal d3" href="robot-trust.html">
+          <div class="project-media">
+            <svg class="ph" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Project preview placeholder">
+              <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#20222e"/><stop offset="1" stop-color="#101018"/>
+              </linearGradient></defs>
+              <rect width="320" height="180" fill="url(#rg)"/>
+              <g fill="none" stroke="rgba(244,239,229,0.16)" stroke-width="1.6">
+                <path d="M50 130 L110 92 L170 108 L230 60 L285 84"/>
+                <circle cx="50" cy="130" r="5" fill="rgba(244,239,229,0.3)" stroke="none"/>
+                <circle cx="110" cy="92" r="5" fill="rgba(244,239,229,0.3)" stroke="none"/>
+                <circle cx="170" cy="108" r="5" fill="rgba(244,239,229,0.3)" stroke="none"/>
+                <circle cx="230" cy="60" r="5" fill="rgba(244,239,229,0.3)" stroke="none"/>
+                <circle cx="285" cy="84" r="5" fill="rgba(244,239,229,0.3)" stroke="none"/>
+              </g>
+            </svg>
+            <img src="RobotTrustPreview.jpg"
+                 alt="Human-robot trust study with the Misty II robot"
+                 loading="lazy" decoding="async"
+                 onerror="this.remove()" />
+          </div>
+          <div class="project-info">
+            <div class="project-text">
+              <p class="project-eyebrow">Research · Human-Robot Interaction · 2025</p>
+              <h3 class="project-title">DeMistyfying Robot Trust</h3>
+              <p class="project-desc">
+                A Wizard-of-Oz study with the Misty II robot testing how the severity of a
+                robot&rsquo;s mistakes shapes the trust people place in it.
+              </p>
+            </div>
+            <span class="project-cta">View project <span class="arrow">&rarr;</span></span>
+          </div>
+        </a>
+      </div>
+
+      <p class="more-soon" id="moreSoon"><span class="dot"></span>More coming soon</p>
     </section>
   </div>
-  <section class="solution">
-    <div class="wrap solution-inner">
-      <div class="exploded-media">
-        <video id="explodedVideo" autoplay muted loop playsinline preload="auto"
-               disablepictureinpicture controlslist="nodownload noplaybackrate nofullscreen"
-               tabindex="-1">
-          <source src="exploded-view.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <p class="exploded-caption">
-        Exploded view of drone arms and tracks with folding demonstration
-      </p>
-    </div>
-  </section>
-  <section class="wrap sol">
-    <div class="sol-grid">
-      <h2 class="sol-title">Solution</h2>
-      <p class="sol-intro">
-        A palm-sized robot that flies to clear obstacles and drives to cover
-        ground, switching between the two on its own.
-      </p>
-      <div class="sol-list">
-        <div class="sol-item">
-          <span class="sol-num">1</span>
-          <div class="sol-text">
-            <h3>The bistable hinge</h3>
-            <p>No motor does the transforming: propeller thrust snaps it up into
-               flight, and the jolt of landing folds it back down to drive.</p>
-          </div>
-        </div>
-        <div class="sol-item">
-          <span class="sol-num">2</span>
-          <div class="sol-text">
-            <h3>Two ways to move</h3>
-            <p>It flies like a quadrotor to jump obstacles, then rolls on tank
-               tracks to cover ground without draining the battery.</p>
-          </div>
-        </div>
-        <div class="sol-item">
-          <span class="sol-num">3</span>
-          <div class="sol-text">
-            <h3>A fraction of the size</h3>
-            <p>At just 200 grams it fits in your palm, making it 3 to 30 times
-               lighter than other robots that both fly and drive.</p>
-          </div>
-        </div>
-      </div>
-      <figure class="sol-fig">
-        <img src="solution-robot.jpg" alt="Front view of the morphing aerial-ground robot" />
-      </figure>
-    </div>
-  </section>
-  <section class="wrap paper">
-    <h2>Read the full paper</h2>
-    <p>
-      Want the mechanism, controls, and flight-to-drive transition in full
-      detail? The complete technical write-up covers the design and results.
-    </p>
-    <a class="paper-btn" href="morphing-drone-paper.pdf" target="_blank" rel="noopener">
-      Read the full paper &rarr;
-    </a>
-  </section>
+
   <footer>
-    <div class="wrap footer-inner">
-      <span class="footer-brand">Jasper Chapman</span>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-brand">Jasper Chapman</a>
       <span class="footer-copy">&copy; <span id="year"></span></span>
     </div>
   </footer>
+
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Reveal the "More coming soon" line when it scrolls into view.
     (function () {
-      var video = document.getElementById("explodedVideo");
-      if (!video) return;
-      var tryPlay = function () { video.play().catch(function () {}); };
+      var ms = document.getElementById("moreSoon");
+      if (!ms) return;
       if ("IntersectionObserver" in window) {
-        var observer = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) { tryPlay(); observer.unobserve(video); }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { ms.classList.add("in"); io.unobserve(ms); }
           });
-        }, { threshold: 0.25 });
-        observer.observe(video);
+        }, { threshold: 0.4 });
+        io.observe(ms);
       } else {
-        tryPlay();
+        ms.classList.add("in");
       }
-      // Fallback: if autoplay is blocked, a tap plays/pauses the clip.
-      video.addEventListener("click", function () {
-        if (video.paused) { video.play().catch(function () {}); } else { video.pause(); }
-      });
     })();
   </script>
 </body>
