@@ -190,10 +190,19 @@
     /* ---------- Carousel (lives in the Solution figure, on dark bg) ---------- */
     .carousel { position: relative; width: 100%; }
     .car-stage { display: flex; align-items: center; gap: 8px; }
-    .carousel-viewport { flex: 1 1 auto; min-width: 0; overflow: hidden; border-radius: 12px; transition: height .45s cubic-bezier(.2,.7,.2,1); }
-    .carousel-track { display: flex; height: 100%; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
-    .slide { flex: 0 0 100%; height: 100%; background: transparent; }
-    .slide img, .slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Fixed-height frame: height stays constant, each image keeps its own width. */
+    .car-frame { position: relative; flex: 1 1 auto; min-width: 0; height: 390px; }
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: translateX(22px); pointer-events: none;
+      transition: opacity .45s ease, transform .45s ease;
+    }
+    .slide.active { opacity: 1; transform: none; pointer-events: auto; }
+    .slide img, .slide video {
+      max-width: 100%; max-height: 100%; width: auto; height: auto;
+      display: block; border-radius: 12px;
+    }
     .car-arrow {
       flex: 0 0 auto;
       background: none; border: none; padding: 0;
@@ -212,7 +221,9 @@
       transition: background .2s ease, transform .2s ease;
     }
     .car-dots button.active { background: var(--cream); transform: scale(1.3); }
-    @media (prefers-reduced-motion: reduce) { .carousel-track { transition: none; } }
+    @media (max-width: 800px) { .car-frame { height: 300px; } }
+    @media (max-width: 480px) { .car-frame { height: 240px; } }
+    @media (prefers-reduced-motion: reduce) { .slide { transition: opacity .01s linear; transform: none; } }
 
     @media (max-width: 800px) {
       .solution-inner {
@@ -412,16 +423,14 @@
             <button class="car-arrow car-prev" type="button" aria-label="Previous slide">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
             </button>
-            <div class="carousel-viewport">
-              <div class="carousel-track" id="carTrack">
-                <div class="slide" data-ar="1.503"><img src="carousel-cad.jpg" alt="CAD render of the morphing aerial-ground robot" loading="lazy" decoding="async"></div>
-                <div class="slide" data-ar="1.537"><img src="carousel-stairs.jpg" alt="Robot driving, transitioning, and flying up a set of stairs" loading="lazy" decoding="async"></div>
-                <div class="slide" data-ar="1.333"><img src="carousel-angle.jpg" alt="Three-quarter view of the assembled robot" loading="lazy" decoding="async"></div>
-                <div class="slide" data-ar="0.75"><img src="carousel-top.jpg" alt="Top-down view of the robot" loading="lazy" decoding="async"></div>
-                <div class="slide" data-ar="1.0"><img src="carousel-front.jpg" alt="Front view of the robot" loading="lazy" decoding="async"></div>
-                <div class="slide" data-ar="1.778"><video src="carousel-clip1.mp4" muted loop playsinline preload="metadata"></video></div>
-                <div class="slide" data-ar="1.778"><video src="carousel-clip2.mp4" muted loop playsinline preload="metadata"></video></div>
-              </div>
+            <div class="car-frame" id="carFrame">
+              <div class="slide"><img src="carousel-cad.jpg" alt="CAD render of the morphing aerial-ground robot" loading="lazy" decoding="async"></div>
+              <div class="slide"><img src="carousel-stairs.jpg" alt="Robot driving, transitioning, and flying up a set of stairs" loading="lazy" decoding="async"></div>
+              <div class="slide"><img src="carousel-angle.jpg" alt="Three-quarter view of the assembled robot" loading="lazy" decoding="async"></div>
+              <div class="slide"><img src="carousel-top.jpg" alt="Top-down view of the robot" loading="lazy" decoding="async"></div>
+              <div class="slide"><img src="carousel-front.jpg" alt="Front view of the robot" loading="lazy" decoding="async"></div>
+              <div class="slide"><video src="carousel-clip1.mp4" muted loop playsinline preload="metadata"></video></div>
+              <div class="slide"><video src="carousel-clip2.mp4" muted loop playsinline preload="metadata"></video></div>
             </div>
             <button class="car-arrow car-next" type="button" aria-label="Next slide">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
@@ -526,9 +535,8 @@
     (function () {
       var car = document.getElementById("solCarousel");
       if (!car) return;
-      var track = document.getElementById("carTrack");
-      var viewport = car.querySelector(".carousel-viewport");
-      var slides = Array.prototype.slice.call(track.children);
+      var frame = document.getElementById("carFrame");
+      var slides = Array.prototype.slice.call(frame.children);
       var dotsWrap = document.getElementById("carDots");
       var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var index = 0, timer = null, paused = false;
@@ -546,24 +554,16 @@
       function clearTimer() { if (timer) { clearTimeout(timer); timer = null; } }
       function schedule(ms) { if (reduce || paused) return; clearTimer(); timer = setTimeout(next, ms); }
 
-      // Size the frame to the current image/clip so there are no letterbox bars.
-      function setHeight() {
-        var ar = parseFloat(slides[index].getAttribute("data-ar")) || 1.5;
-        var w = viewport.clientWidth;
-        if (w) viewport.style.height = Math.round(w / ar) + "px";
-      }
-
       function activate(i) {
         index = (i + slides.length) % slides.length;
-        track.style.transform = "translateX(" + (-index * 100) + "%)";
-        setHeight();
+        slides.forEach(function (s, k) {
+          s.classList.toggle("active", k === index);
+          var vv = s.querySelector("video");
+          if (vv && k !== index) { try { vv.pause(); vv.currentTime = 0; } catch (e) {} }
+        });
         dots.forEach(function (d, k) {
           d.classList.toggle("active", k === index);
           d.setAttribute("aria-selected", k === index ? "true" : "false");
-        });
-        slides.forEach(function (s) {
-          var vv = s.querySelector("video");
-          if (vv) { try { vv.pause(); vv.currentTime = 0; } catch (e) {} }
         });
         clearTimer();
         var v = slides[index].querySelector("video");
@@ -591,11 +591,8 @@
       car.addEventListener("keydown", function (e) {
         if (e.key === "ArrowLeft") { prev(); } else if (e.key === "ArrowRight") { next(); }
       });
-      window.addEventListener("resize", setHeight);
 
-      viewport.style.transition = "none";
       activate(0);
-      requestAnimationFrame(function () { viewport.style.transition = ""; });
     })();
   </script>
 </body>
