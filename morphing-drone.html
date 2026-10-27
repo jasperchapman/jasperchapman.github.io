@@ -13,9 +13,12 @@
       --cream: #f4efe5;
       --muted: #d8d3c8;
       --line: rgba(244, 239, 229, 0.25);
+      --line-soft: rgba(244, 239, 229, 0.12);
+      --surface: #141a21;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
+    html { background: var(--navy); }
     body {
       background: var(--navy);
       color: var(--cream);
@@ -43,6 +46,7 @@
       letter-spacing: 0.01em;
     }
     nav .menu a.active { text-decoration: underline; text-underline-offset: 6px; }
+
     .hero {
       display: grid;
       grid-template-columns: 1.6fr 1fr;
@@ -72,10 +76,8 @@
       aspect-ratio: 2768 / 1068;
       object-fit: cover;
     }
-    .block {
-      text-align: center;
-      padding: 90px 0 20px;
-    }
+
+    .block { text-align: center; padding: 90px 0 20px; }
     .block-title {
       margin: 0 0 34px;
       font-weight: 500;
@@ -90,6 +92,7 @@
       line-height: 1.6;
       color: var(--muted);
     }
+
     .sol { padding: 84px 3.8% 40px; }
     .sol-grid {
       display: grid;
@@ -152,6 +155,7 @@
       line-height: 1.5;
       max-width: 52ch;
     }
+
     .solution {
       background: #ffffff;
       color: #17233f;
@@ -204,41 +208,70 @@
       .sol-fig { justify-self: center; margin: 0 auto 36px; }
       .sol-fig img { max-width: 520px; }
     }
-    /* Phones: zoom the hero into its center with a taller crop, and let the video fill */
+    /* Phones: zoom the hero into its center; make the exploded-view video span nearly full width */
     @media (max-width: 640px) {
       .hero-image { aspect-ratio: 4 / 3; object-position: center; }
-      /* Make the exploded-view video span nearly the full phone screen */
       .solution-inner { padding: 20px 0 26px; gap: 14px; }
       .exploded-media video,
       .exploded-media img { width: 100%; height: auto; max-height: none; border-radius: 0; }
       .exploded-caption { padding: 0 5%; }
     }
-    .paper { text-align: center; padding: 96px 0 40px; }
-    .paper h2 {
-      margin: 0 0 16px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+
+    /* ---------- Related publications ---------- */
+    .pubs { padding: 90px 3.8% 24px; }
+    .pubs-title {
+      margin: 0;
+      font-weight: 700;
       font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+      letter-spacing: -0.01em;
     }
-    .paper p {
-      margin: 0 auto 34px;
-      max-width: 52ch;
-      color: var(--muted);
-      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
-      line-height: 1.6;
+    .pubs-rule { height: 1px; background: var(--line); margin: 16px 0 clamp(26px, 3.5vw, 38px); }
+
+    .pub {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 30px;
+      padding-bottom: clamp(26px, 3.5vw, 36px);
     }
-    .paper-btn {
-      display: inline-block;
-      background: var(--cream);
-      color: #0d1116;
-      padding: 15px 32px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 1.05rem;
-      transition: opacity 0.15s ease;
+    .pub + .pub {
+      border-top: 1px solid var(--line-soft);
+      padding-top: clamp(26px, 3.5vw, 36px);
     }
-    .paper-btn:hover { opacity: 0.85; }
+    .pub-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--line-soft);
+    }
+    .pub-body { min-width: 0; }
+    .pub-title {
+      margin: 0 0 10px;
+      font-weight: 700;
+      font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+      line-height: 1.22;
+    }
+    .pub-authors { margin: 0 0 8px; color: var(--muted); font-size: 1rem; line-height: 1.45; }
+    .pub-authors .me { color: var(--cream); font-weight: 600; }
+    .pub-venue { margin: 0 0 8px; color: var(--muted); font-size: 0.98rem; line-height: 1.45; }
+    .pub-award { margin: 0 0 10px; color: var(--cream); font-weight: 600; font-size: 0.95rem; }
+    .pub-links { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 12px; }
+    .pub-links a {
+      color: var(--cream);
+      font-size: 0.95rem;
+      text-decoration: underline;
+      text-decoration-color: var(--line);
+      text-underline-offset: 3px;
+      transition: text-decoration-color .15s ease;
+    }
+    .pub-links a:hover, .pub-links a:focus-visible { text-decoration-color: var(--cream); }
+    @media (max-width: 640px) {
+      .pub { grid-template-columns: 1fr; gap: 14px; }
+      .pub-thumb { max-width: 340px; }
+    }
+
     footer { margin-top: 90px; border-top: 1px solid var(--line); }
     .footer-inner {
       padding: 28px 3.8%;
@@ -248,15 +281,8 @@
       flex-wrap: wrap;
       gap: 16px;
     }
-    .footer-brand {
-      font-weight: 600;
-      font-size: 1rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .footer-links { display: flex; gap: 26px; flex-wrap: wrap; }
-    .footer-links a { font-size: 0.95rem; color: var(--muted); transition: color 0.15s ease; }
-    .footer-links a:hover { color: var(--cream); }
+    .footer-brand { font-weight: 600; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; transition: opacity .16s ease; }
+    a.footer-brand:hover, a.footer-brand:focus-visible { opacity: 0.7; }
     .footer-copy { font-size: 0.85rem; color: var(--muted); }
   </style>
 </head>
@@ -345,19 +371,36 @@
       </figure>
     </div>
   </section>
-  <section class="wrap paper">
-    <h2>Read the full paper</h2>
-    <p>
-      Want the mechanism, controls, and flight-to-drive transition in full
-      detail? The complete technical write-up covers the design and results.
-    </p>
-    <a class="paper-btn" href="morphing-drone-paper.pdf" target="_blank" rel="noopener">
-      Read the full paper &rarr;
-    </a>
+
+  <section class="wrap pubs">
+    <h2 class="pubs-title">Related Publications</h2>
+    <div class="pubs-rule"></div>
+
+    <!-- Duplicate this <article> block to add more publications -->
+    <article class="pub">
+      <img class="pub-thumb" src="solution-robot.jpg"
+           alt="Passively morphing aerial-ground robot"
+           loading="lazy" decoding="async" />
+      <div class="pub-body">
+        <h3 class="pub-title">Passively Morphing Aerial-Ground Robot</h3>
+        <p class="pub-authors"><span class="me">Jasper Chapman</span>, Co-author Name, Advisor Name</p>
+        <p class="pub-venue">Venue / Workshop / Conference, Year</p>
+        <!-- Optional award line; delete if not applicable -->
+        <!-- <p class="pub-award">&#127942; Best Paper Award</p> -->
+        <div class="pub-links">
+          <a href="morphing-drone-paper.pdf" target="_blank" rel="noopener">Paper</a>
+          <!-- Add more links as needed, e.g.: -->
+          <!-- <a href="#">Poster</a> -->
+          <!-- <a href="#" target="_blank" rel="noopener">Video &#8599;</a> -->
+          <!-- <a href="#" target="_blank" rel="noopener">Project website &#8599;</a> -->
+        </div>
+      </div>
+    </article>
   </section>
+
   <footer>
     <div class="wrap footer-inner">
-      <span class="footer-brand">Jasper Chapman</span>
+      <a href="index.html" class="footer-brand">Jasper Chapman</a>
       <span class="footer-copy">&copy; <span id="year"></span></span>
     </div>
   </footer>
@@ -377,7 +420,6 @@
       } else {
         tryPlay();
       }
-      // Fallback: if autoplay is blocked, a tap plays/pauses the clip.
       video.addEventListener("click", function () {
         if (video.paused) { video.play().catch(function () {}); } else { video.pause(); }
       });
