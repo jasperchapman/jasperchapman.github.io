@@ -27,7 +27,6 @@
       font-family: var(--font);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
-      /* sticky footer: hold the footer at the bottom even on short/phone screens */
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
@@ -37,7 +36,7 @@
     a { color: inherit; text-decoration: none; }
     .wrap { width: 100%; margin: 0; padding: 0 3.8%; }
 
-    /* ---------- Profile header (layout kept) ---------- */
+    /* ---------- Profile header ---------- */
     .profile { padding: clamp(44px, 7vw, 88px) 0 clamp(30px, 4vw, 48px); }
     .profile-inner {
       display: flex;
@@ -52,8 +51,8 @@
       border: 1px solid var(--line);
       overflow: hidden;
       box-shadow: 0 20px 46px -24px rgba(0,0,0,0.85);
+      position: relative;
     }
-    .avatar { position: relative; }
     .avatar > * {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
@@ -85,28 +84,6 @@
       max-width: 58ch;
     }
 
-    nav.links {
-      margin-top: clamp(22px, 3vw, 30px);
-      display: flex;
-      flex-wrap: wrap;
-      gap: clamp(20px, 2.6vw, 38px);
-    }
-    nav.links a {
-      text-transform: uppercase;
-      font-weight: 600;
-      font-size: 0.86rem;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      padding-bottom: 3px;
-      transition: color .16s ease;
-    }
-    nav.links a:hover, nav.links a:focus-visible { color: var(--cream); }
-    nav.links a[aria-current="page"] {
-      color: var(--cream);
-      text-decoration: underline;
-      text-underline-offset: 6px;
-    }
-
     .socials { margin-top: clamp(20px, 2.5vw, 26px); display: flex; gap: 14px; }
     .socials a {
       display: inline-flex; align-items: center; justify-content: center;
@@ -126,7 +103,7 @@
       font-weight: 600; font-size: 0.92rem; letter-spacing: 0.01em;
     }
 
-    /* ---------- Projects (one listed project) ---------- */
+    /* ---------- Projects ---------- */
     .divider { height: 1px; background: var(--line-soft); margin: clamp(6px,1.5vw,16px) 3.8% clamp(36px,4.5vw,56px); }
 
     .projects { padding-bottom: clamp(40px, 6vw, 80px); }
@@ -146,10 +123,7 @@
       display: inline-block; width: 7px; height: 7px; border-radius: 50%;
       background: var(--muted); margin-right: 9px; vertical-align: middle;
     }
-    @media (prefers-reduced-motion: no-preference) {
-      .more-soon .dot { animation: soonpulse 1.7s ease-in-out infinite; }
-      @keyframes soonpulse { 0%,100%{opacity:.3;transform:scale(.8);} 50%{opacity:1;transform:scale(1);} }
-    }
+
     .projects-head {
       margin-bottom: clamp(22px, 3vw, 32px);
       text-align: center;
@@ -226,6 +200,20 @@
       font-size: clamp(1rem, 1.3vw, 1.12rem);
       line-height: 1.5;
     }
+
+    /* award chips on a project card */
+    .award-row {
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: 7px; margin-top: 14px;
+    }
+    .award-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; font-weight: 600; color: var(--cream);
+      background: rgba(244,239,229,0.07);
+      border: 1px solid var(--line-soft);
+      border-radius: 999px; padding: 5px 12px;
+    }
+
     .project-cta {
       align-self: flex-start;
       margin-top: auto;
@@ -241,14 +229,13 @@
 
     /* ---------- footer ---------- */
     footer { margin-top: auto; border-top: 1px solid var(--line); }
-    .footer-brand { transition: opacity .16s ease; }
+    .footer-brand { font-weight: 600; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; transition: opacity .16s ease; }
     a.footer-brand:hover, a.footer-brand:focus-visible { opacity: 0.7; }
     .footer-inner {
       padding: 26px 3.8%;
       display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 14px;
     }
-    .footer-brand { font-weight: 600; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; }
     .footer-copy { font-size: 0.85rem; color: var(--muted); }
 
     :focus-visible { outline: 2px solid var(--cream); outline-offset: 3px; border-radius: 6px; }
@@ -268,16 +255,17 @@
       .d1 { animation-delay: .04s; } .d2 { animation-delay: .12s; }
       .d3 { animation-delay: .2s; } .d4 { animation-delay: .28s; }
       @keyframes rise { to { opacity: 1; transform: none; } }
+      .more-soon .dot { animation: soonpulse 1.7s ease-in-out infinite; }
+      @keyframes soonpulse { 0%,100%{opacity:.3;transform:scale(.8);} 50%{opacity:1;transform:scale(1);} }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- ============ PROFILE (layout unchanged) ============ -->
+    <!-- ============ PROFILE ============ -->
     <header class="profile">
       <div class="profile-inner">
         <div class="avatar reveal d1">
-          <!-- placeholder shown if the headshot can't load -->
           <svg viewBox="0 0 214 231" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Profile photo placeholder">
             <defs>
               <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
@@ -311,7 +299,7 @@
             </a>
             <a class="resume-btn" href="Jasper_Chapman_Resume.pdf" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
-            <span>Résumé</span>
+              <span>Résumé</span>
             </a>
           </div>
         </div>
@@ -322,14 +310,14 @@
   <div class="divider"></div>
 
   <div class="wrap">
-    <!-- ============ PROJECTS: one listed project ============ -->
+    <!-- ============ PROJECTS ============ -->
     <section id="projects" class="projects" aria-labelledby="projects-h">
       <div class="projects-head">
         <h2 id="projects-h">Projects</h2>
       </div>
 
       <div class="project-grid">
-        <!-- Project 1: clicking the card / image opens the drone project page -->
+        <!-- Project 1: drone (cover card with award chips) -->
         <a class="project-card reveal d2" href="morphing-drone.html">
           <div class="project-media">
             <svg class="ph" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Project preview placeholder">
@@ -355,6 +343,10 @@
                 A palm-sized robot that flies over obstacles and rolls through tight
                 spaces, switching between flight and driving using only its own thrust.
               </p>
+              <div class="award-row">
+                <span class="award-chip">&#127942; IROS Nominated Workshop Paper</span>
+                <span class="award-chip">&#127942; Best Poster Prize</span>
+              </div>
             </div>
             <span class="project-cta">View project <span class="arrow">&rarr;</span></span>
           </div>
@@ -410,7 +402,6 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Reveal the "More coming soon" line when it scrolls into view.
     (function () {
       var ms = document.getElementById("moreSoon");
       if (!ms) return;
