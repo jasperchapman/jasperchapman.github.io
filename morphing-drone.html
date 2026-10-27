@@ -190,10 +190,10 @@
     /* ---------- Carousel (lives in the Solution figure, on dark bg) ---------- */
     .carousel { position: relative; width: 100%; }
     .car-stage { display: flex; align-items: center; gap: 8px; }
-    .carousel-viewport { flex: 1 1 auto; min-width: 0; overflow: hidden; border-radius: 12px; }
-    .carousel-track { display: flex; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
-    .slide { flex: 0 0 100%; aspect-ratio: 3 / 2; background: #ffffff; display: flex; align-items: center; justify-content: center; }
-    .slide img, .slide video { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .carousel-viewport { flex: 1 1 auto; min-width: 0; overflow: hidden; border-radius: 12px; transition: height .45s cubic-bezier(.2,.7,.2,1); }
+    .carousel-track { display: flex; height: 100%; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .slide { flex: 0 0 100%; height: 100%; background: transparent; }
+    .slide img, .slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .car-arrow {
       flex: 0 0 auto;
       background: none; border: none; padding: 0;
@@ -414,13 +414,13 @@
             </button>
             <div class="carousel-viewport">
               <div class="carousel-track" id="carTrack">
-                <div class="slide"><img src="carousel-cad.jpg" alt="CAD render of the morphing aerial-ground robot" loading="lazy" decoding="async"></div>
-                <div class="slide"><img src="carousel-stairs.jpg" alt="Robot driving, transitioning, and flying up a set of stairs" loading="lazy" decoding="async"></div>
-                <div class="slide"><img src="carousel-angle.jpg" alt="Three-quarter view of the assembled robot" loading="lazy" decoding="async"></div>
-                <div class="slide"><img src="carousel-top.jpg" alt="Top-down view of the robot" loading="lazy" decoding="async"></div>
-                <div class="slide"><img src="carousel-front.jpg" alt="Front view of the robot" loading="lazy" decoding="async"></div>
-                <div class="slide"><video src="carousel-clip1.mp4" muted playsinline preload="metadata"></video></div>
-                <div class="slide"><video src="carousel-clip2.mp4" muted playsinline preload="metadata"></video></div>
+                <div class="slide" data-ar="1.503"><img src="carousel-cad.jpg" alt="CAD render of the morphing aerial-ground robot" loading="lazy" decoding="async"></div>
+                <div class="slide" data-ar="1.537"><img src="carousel-stairs.jpg" alt="Robot driving, transitioning, and flying up a set of stairs" loading="lazy" decoding="async"></div>
+                <div class="slide" data-ar="1.333"><img src="carousel-angle.jpg" alt="Three-quarter view of the assembled robot" loading="lazy" decoding="async"></div>
+                <div class="slide" data-ar="0.75"><img src="carousel-top.jpg" alt="Top-down view of the robot" loading="lazy" decoding="async"></div>
+                <div class="slide" data-ar="1.0"><img src="carousel-front.jpg" alt="Front view of the robot" loading="lazy" decoding="async"></div>
+                <div class="slide" data-ar="1.778"><video src="carousel-clip1.mp4" muted loop playsinline preload="metadata"></video></div>
+                <div class="slide" data-ar="1.778"><video src="carousel-clip2.mp4" muted loop playsinline preload="metadata"></video></div>
               </div>
             </div>
             <button class="car-arrow car-next" type="button" aria-label="Next slide">
@@ -527,11 +527,12 @@
       var car = document.getElementById("solCarousel");
       if (!car) return;
       var track = document.getElementById("carTrack");
+      var viewport = car.querySelector(".carousel-viewport");
       var slides = Array.prototype.slice.call(track.children);
       var dotsWrap = document.getElementById("carDots");
       var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var index = 0, timer = null, paused = false;
-      var IMG_MS = 4500, VIDEO_SAFETY_MS = 16000;
+      var IMG_MS = 4500, VIDEO_MS = 11000;
 
       var dots = slides.map(function (s, i) {
         var b = document.createElement("button");
@@ -545,22 +546,30 @@
       function clearTimer() { if (timer) { clearTimeout(timer); timer = null; } }
       function schedule(ms) { if (reduce || paused) return; clearTimer(); timer = setTimeout(next, ms); }
 
+      // Size the frame to the current image/clip so there are no letterbox bars.
+      function setHeight() {
+        var ar = parseFloat(slides[index].getAttribute("data-ar")) || 1.5;
+        var w = viewport.clientWidth;
+        if (w) viewport.style.height = Math.round(w / ar) + "px";
+      }
+
       function activate(i) {
         index = (i + slides.length) % slides.length;
         track.style.transform = "translateX(" + (-index * 100) + "%)";
+        setHeight();
         dots.forEach(function (d, k) {
           d.classList.toggle("active", k === index);
           d.setAttribute("aria-selected", k === index ? "true" : "false");
         });
         slides.forEach(function (s) {
           var vv = s.querySelector("video");
-          if (vv) { try { vv.pause(); vv.currentTime = 0; vv.onended = null; } catch (e) {} }
+          if (vv) { try { vv.pause(); vv.currentTime = 0; } catch (e) {} }
         });
         clearTimer();
         var v = slides[index].querySelector("video");
         if (v) {
-          v.play().catch(function () {});
-          if (!reduce && !paused) { v.onended = function () { if (!paused) next(); }; schedule(VIDEO_SAFETY_MS); }
+          v.play().catch(function () {});   // video has loop, so it keeps playing
+          schedule(VIDEO_MS);
         } else {
           schedule(IMG_MS);
         }
@@ -571,22 +580,22 @@
       car.querySelector(".car-next").addEventListener("click", next);
       car.querySelector(".car-prev").addEventListener("click", prev);
 
+      // Pause only the auto-advance on hover; the clip keeps looping.
       car.addEventListener("mouseenter", function () { paused = true; clearTimer(); });
       car.addEventListener("mouseleave", function () {
         paused = false;
         var v = slides[index].querySelector("video");
-        if (v) {
-          if (v.ended) { next(); }
-          else if (!reduce) { v.onended = function () { if (!paused) next(); }; schedule(VIDEO_SAFETY_MS); }
-        } else {
-          schedule(IMG_MS);
-        }
+        if (v) { v.play().catch(function () {}); schedule(VIDEO_MS); }
+        else { schedule(IMG_MS); }
       });
       car.addEventListener("keydown", function (e) {
         if (e.key === "ArrowLeft") { prev(); } else if (e.key === "ArrowRight") { next(); }
       });
+      window.addEventListener("resize", setHeight);
 
+      viewport.style.transition = "none";
       activate(0);
+      requestAnimationFrame(function () { viewport.style.transition = ""; });
     })();
   </script>
 </body>
