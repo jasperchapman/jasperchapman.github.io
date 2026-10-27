@@ -19,6 +19,7 @@
     * { box-sizing: border-box; }
     html, body { margin: 0; }
     html { background: var(--navy); }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
     body {
       background: var(--navy);
       color: var(--cream);
@@ -131,7 +132,7 @@
     .sol { padding: 84px 3.8% 40px; }
     .sol-grid {
       display: grid;
-      grid-template-columns: 1.15fr 1fr;
+      grid-template-columns: 1fr 1.35fr;
       grid-template-areas:
         "title  title"
         "intro  figure"
@@ -161,7 +162,7 @@
       margin: 0;
       min-width: 0;
       width: 100%;
-      max-width: 560px;
+      max-width: 780px;
       align-self: center;
       justify-self: end;
     }
@@ -188,22 +189,22 @@
 
     /* ---------- Carousel (lives in the Solution figure, on dark bg) ---------- */
     .carousel { position: relative; width: 100%; }
-    .car-stage { position: relative; }
-    .carousel-viewport { overflow: hidden; border-radius: 12px; }
+    .car-stage { display: flex; align-items: center; gap: 8px; }
+    .carousel-viewport { flex: 1 1 auto; min-width: 0; overflow: hidden; border-radius: 12px; }
     .carousel-track { display: flex; transition: transform .55s cubic-bezier(.2,.7,.2,1); }
     .slide { flex: 0 0 100%; aspect-ratio: 3 / 2; background: #ffffff; display: flex; align-items: center; justify-content: center; }
     .slide img, .slide video { width: 100%; height: 100%; object-fit: contain; display: block; }
     .car-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
-      width: 40px; height: 40px; border-radius: 50%;
-      border: 1px solid rgba(23,35,63,0.18);
-      background: rgba(255,255,255,0.9); color: #17233f;
+      flex: 0 0 auto;
+      background: none; border: none; padding: 0;
+      color: var(--cream);
+      width: 30px; height: 46px;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background .15s ease, box-shadow .15s ease;
+      cursor: pointer; opacity: 0.75;
+      transition: opacity .15s ease, transform .15s ease;
     }
-    .car-arrow:hover, .car-arrow:focus-visible { background: #fff; box-shadow: 0 3px 12px rgba(0,0,0,0.18); }
-    .car-arrow svg { width: 19px; height: 19px; }
-    .car-prev { left: 10px; } .car-next { right: 10px; }
+    .car-arrow:hover, .car-arrow:focus-visible { opacity: 1; transform: scale(1.15); }
+    .car-arrow svg { width: 26px; height: 26px; }
     .car-dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
     .car-dots button {
       width: 8px; height: 8px; border-radius: 50%; border: none; padding: 0;
@@ -298,6 +299,17 @@
       .pub-thumb { max-width: 340px; }
     }
 
+    .to-top-wrap { text-align: center; padding: clamp(44px,6vw,72px) 3.8% 0; }
+    .to-top {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: none; border: 1px solid var(--line); color: var(--cream);
+      font: inherit; font-size: 0.86rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 11px 22px; border-radius: 999px; cursor: pointer; text-decoration: none;
+      transition: background .16s ease, transform .16s ease;
+    }
+    .to-top:hover, .to-top:focus-visible { background: var(--surface); transform: translateY(-2px); }
+    .to-top svg { width: 16px; height: 16px; }
+
     footer { margin-top: 90px; border-top: 1px solid var(--line); }
     .footer-inner {
       padding: 28px 3.8%;
@@ -313,7 +325,7 @@
   </style>
 </head>
 <body>
-  <header class="topbar">
+  <header class="topbar" id="top">
     <div class="wrap">
       <nav>
         <a href="index.html" class="brand">Jasper Chapman</a>
@@ -397,6 +409,9 @@
       <figure class="sol-fig">
         <div class="carousel" id="solCarousel" aria-roledescription="carousel" aria-label="Robot gallery">
           <div class="car-stage">
+            <button class="car-arrow car-prev" type="button" aria-label="Previous slide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
             <div class="carousel-viewport">
               <div class="carousel-track" id="carTrack">
                 <div class="slide"><img src="carousel-cad.jpg" alt="CAD render of the morphing aerial-ground robot" loading="lazy" decoding="async"></div>
@@ -408,9 +423,6 @@
                 <div class="slide"><video src="carousel-clip2.mp4" muted playsinline preload="metadata"></video></div>
               </div>
             </div>
-            <button class="car-arrow car-prev" type="button" aria-label="Previous slide">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            </button>
             <button class="car-arrow car-next" type="button" aria-label="Next slide">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
             </button>
@@ -472,6 +484,13 @@
       </div>
     </article>
   </section>
+
+  <div class="to-top-wrap">
+    <a class="to-top" href="#top" aria-label="Back to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+      Back to top
+    </a>
+  </div>
 
   <footer>
     <div class="wrap footer-inner">
