@@ -229,7 +229,7 @@
 
     .pub {
       display: grid;
-      grid-template-columns: 210px 1fr;
+      grid-template-columns: 240px 1fr;
       gap: 30px;
       padding-bottom: clamp(26px, 3.5vw, 36px);
     }
@@ -238,13 +238,18 @@
       padding-top: clamp(26px, 3.5vw, 36px);
     }
     .pub-thumb {
+      position: relative;
       width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
+      aspect-ratio: 1000 / 727;
       border-radius: 8px;
-      display: block;
+      overflow: hidden;
       background: var(--surface);
       border: 1px solid var(--line-soft);
+    }
+    .pub-thumb > * {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: contain; display: block;
     }
     .pub-body { min-width: 0; }
     .pub-title {
@@ -378,9 +383,17 @@
 
     <!-- Duplicate this <article> block to add more publications -->
     <article class="pub">
-      <img class="pub-thumb" src="morphing-drone-pub.jpg"
-           alt="Morphing robot climbing a 35-degree ramp in flight-to-drive sequence"
-           loading="lazy" decoding="async" />
+      <div class="pub-thumb">
+        <svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="320" height="200" fill="#141a21"/>
+          <g fill="none" stroke="rgba(244,239,229,0.12)" stroke-width="1.4">
+            <circle cx="120" cy="100" r="40"/><path d="M0 150 Q120 80 320 120"/>
+          </g>
+        </svg>
+        <img src="morphing-drone-pub.jpg"
+             alt="Morphing robot climbing a 35-degree ramp in flight-to-drive sequence"
+             loading="lazy" decoding="async" onerror="this.remove()" />
+      </div>
       <div class="pub-body">
         <h3 class="pub-title">Passively Morphing Aerial-Ground Robot</h3>
         <p class="pub-authors"><span class="me">Jasper Chapman</span>, Shashwat Singh, Zeynep Temel</p>
