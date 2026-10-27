@@ -240,7 +240,6 @@
     .pub-thumb {
       position: relative;
       width: 100%;
-      aspect-ratio: 1000 / 727;
       border-radius: 8px;
       overflow: hidden;
       background: var(--surface);
@@ -383,7 +382,7 @@
 
     <!-- Duplicate this <article> block to add more publications -->
     <article class="pub">
-      <div class="pub-thumb">
+      <div class="pub-thumb" style="aspect-ratio: 1000 / 727;">
         <svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="320" height="200" fill="#141a21"/>
           <g fill="none" stroke="rgba(244,239,229,0.12)" stroke-width="1.4">
@@ -402,6 +401,29 @@
         <div class="pub-links">
           <a href="morphing-drone-paper.pdf" target="_blank" rel="noopener">Paper</a>
           <a href="morphing-drone-poster.pdf" target="_blank" rel="noopener">Poster</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="pub">
+      <div class="pub-thumb" style="aspect-ratio: 16 / 9;">
+        <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="320" height="180" fill="#141a21"/>
+          <g fill="none" stroke="rgba(244,239,229,0.12)" stroke-width="1.4">
+            <circle cx="120" cy="90" r="40"/><path d="M0 140 Q120 70 320 110"/>
+          </g>
+        </svg>
+        <img src="rose-slide.jpg"
+             alt="ROSE workshop presentation slide: Palm-Scale Hybrid Aerial-Ground Robot"
+             loading="lazy" decoding="async" onerror="this.remove()" />
+      </div>
+      <div class="pub-body">
+        <h3 class="pub-title">Palm-Scale Hybrid Aerial-Ground Robot for Confined and Unstructured Environments</h3>
+        <p class="pub-authors"><span class="me">Jasper Chapman</span>, Shashwat Singh, Zeynep Temel</p>
+        <p class="pub-venue">Robotic One Shot Exploration (ROSE), IROS 2026 Workshop</p>
+        <div class="pub-links">
+          <a href="rose-presentation.pdf" target="_blank" rel="noopener">Slides</a>
+          <a href="https://sites.google.com/view/iros-2026-rose-workshop/home" target="_blank" rel="noopener">Workshop website &#8599;</a>
         </div>
       </div>
     </article>
