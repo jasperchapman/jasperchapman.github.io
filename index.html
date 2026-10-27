@@ -166,14 +166,16 @@
       overflow: hidden;
       background: #10161d;
     }
-    .project-media > * {
+    .project-media > img, .project-media > svg {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover; display: block;
       transition: transform .5s cubic-bezier(.2,.7,.2,1);
     }
-    .project-card:hover .project-media > *,
-    .project-card:focus-visible .project-media > * { transform: scale(1.045); }
+    .project-card:hover .project-media > img,
+    .project-card:hover .project-media > svg,
+    .project-card:focus-visible .project-media > img,
+    .project-card:focus-visible .project-media > svg { transform: scale(1.045); }
 
     .project-info {
       display: flex;
@@ -201,17 +203,20 @@
       line-height: 1.5;
     }
 
-    /* award chips on a project card */
-    .award-row {
-      display: flex; flex-direction: column; align-items: flex-start;
-      gap: 7px; margin-top: 14px;
+    /* award chips overlaid on the project image (keeps card bodies equal height) */
+    .media-awards {
+      position: absolute; top: 12px; left: 12px; z-index: 2;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+      max-width: calc(100% - 24px);
     }
     .award-chip {
       display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.8rem; font-weight: 600; color: var(--cream);
-      background: rgba(244,239,229,0.07);
-      border: 1px solid var(--line-soft);
-      border-radius: 999px; padding: 5px 12px;
+      font-size: 0.74rem; font-weight: 600; color: var(--cream);
+      background: rgba(13,17,22,0.82);
+      border: 1px solid rgba(244,239,229,0.22);
+      border-radius: 999px; padding: 5px 11px;
+      -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+      white-space: nowrap;
     }
 
     .project-cta {
@@ -334,6 +339,11 @@
                  alt="Passively morphing aerial-ground robot on pavement"
                  loading="lazy" decoding="async"
                  onerror="this.remove()" />
+            <div class="media-awards">
+              <span class="award-chip">&#127942; IROS Nominated Workshop Paper</span>
+              <span class="award-chip">&#127942; Best Poster Prize</span>
+              <span class="award-chip">&#127942; SURF Nominee</span>
+            </div>
           </div>
           <div class="project-info">
             <div class="project-text">
@@ -343,10 +353,6 @@
                 A palm-sized robot that flies over obstacles and rolls through tight
                 spaces, switching between flight and driving using only its own thrust.
               </p>
-              <div class="award-row">
-                <span class="award-chip">&#127942; IROS Nominated Workshop Paper</span>
-                <span class="award-chip">&#127942; Best Poster Prize</span>
-              </div>
             </div>
             <span class="project-cta">View project <span class="arrow">&rarr;</span></span>
           </div>
